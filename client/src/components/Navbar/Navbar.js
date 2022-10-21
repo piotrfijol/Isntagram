@@ -1,14 +1,33 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import './Navbar.scss'
 import { FaHome, FaCompass, FaUser } from 'react-icons/fa'
 
-export default function Navbar() {
+export default function Navbar({ hideLocations, authOnly = false }) {
 
-  let userName = "name";
+  let location = useLocation();
+  let [shouldRender, setShouldRender] = useState(true);
 
-  return (
-    <nav class="nav">
+  // Mock the user context
+  const user = {
+    name: "name",
+    isLoggedIn: true
+  }
+
+  useEffect(() => {
+    if(authOnly) {
+      shouldRender = setShouldRender(user.isLoggedIn);
+    } else {
+      shouldRender = setShouldRender(true);
+    }
+  }, [authOnly]);
+
+  const forbiddenLocations = !Array.isArray(hideLocations) || hideLocations.length < 1
+    ? ['/signin', '/signup'] 
+    : hideLocations;
+
+  return (forbiddenLocations.includes(location.pathname) || !shouldRender ? null :
+    <nav className="nav">
         <header>
             <h1>Instagram</h1>
         </header>
@@ -26,7 +45,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="nav__item">
-              <Link to={`/profile/${userName}`}>
+              <Link to={`/profile/${user.name}`}>
                 <FaUser className="nav__item__icon" />
                 <span className="nav__item__label">Profile</span>
               </Link>
