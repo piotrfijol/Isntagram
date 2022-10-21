@@ -22,8 +22,13 @@ $sidebar-size: 6rem;
     position: fixed;
     bottom: 0;
 
-    h1 {
+    header {
+        display: none;
+    }
+
+    header h1 {
         margin: 0;
+        padding: 0;
         display: none;
     }
 
@@ -61,7 +66,21 @@ $sidebar-size: 6rem;
     #root {
         flex-direction: row;
     }
-    
+
+    .nav header svg {
+        width: 1.5em;
+        height: 1.5em;
+        fill: rgb(30, 29, 29);
+    }
+
+    .nav header {
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 2em 0;
+    }
+
     .nav::before {
         content: '';
         height: inherit;
@@ -104,8 +123,23 @@ $sidebar-size: 6rem;
         }
     }   
 
+
+    .nav:hover header {
+        width: calc($sidebar-size + 7rem);
+
+        svg {
+            opacity: 0;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            display: inline-block;
+            text-align: center;
+        }
+    }
+
     .nav:hover::before {
-        width: 13em;
+        width: calc($sidebar-size + 7rem);
     }
 
     .nav:hover .nav__item__label {

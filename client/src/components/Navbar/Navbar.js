@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Navbar.scss'
-import { FaHome, FaCompass, FaUser } from 'react-icons/fa'
+import { FaHome, FaCompass, FaUser, FaCameraRetro } from 'react-icons/fa'
 
 export default function Navbar({ hideLocations, authOnly = false }) {
 
@@ -29,7 +29,8 @@ export default function Navbar({ hideLocations, authOnly = false }) {
   return (forbiddenLocations.includes(location.pathname) || !shouldRender ? null :
     <nav className="nav">
         <header>
-            <h1>Instagram</h1>
+            <FaCameraRetro />
+            <h1>Isntagram</h1>
         </header>
         <ul>
             <li className="nav__item">
