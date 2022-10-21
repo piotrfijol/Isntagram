@@ -12,12 +12,14 @@ function App() {
     <React.Fragment>
       <Router>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile/:name" element={<Profile />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-        </Routes>
+        <div className='content'>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile/:name" element={<Profile />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+          </Routes>
+        </div>
       </Router>
     </React.Fragment>
   );
