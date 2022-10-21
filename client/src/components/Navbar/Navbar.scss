@@ -1,9 +1,17 @@
-$sidebar-size: 6em;
+$sidebar-size: 6rem;
+
+#root {
+    display: flex;
+    height: 100vh;
+    flex-direction: column-reverse;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1;
+}
 
 .nav {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100vw;
     display: flex;
     align-items: center;
@@ -11,6 +19,8 @@ $sidebar-size: 6em;
     box-sizing: border-box;
     background-color: #FFF;
     box-shadow: 0 -1px 3px 0 #DDD;
+    position: fixed;
+    bottom: 0;
 
     h1 {
         margin: 0;
@@ -48,21 +58,37 @@ $sidebar-size: 6em;
 }
 
 @media (min-width: 481px) {
+    #root {
+        flex-direction: row;
+    }
+    
+    .nav::before {
+        content: '';
+        height: inherit;
+        width: $sidebar-size;
+        background-color: #FFF;
+        position: fixed;
+        z-index: -1;
+        box-shadow: 1px 0 3px 0 #DDD;
+        transition: width .15s ease-out;
+    }
+
     .nav {
-        left: 0;
-        top: 0;
         height: 100vh;
+        position: relative;
+        z-index: 1000;
         width: $sidebar-size;
         box-sizing: border-box;
-        box-shadow: 1px 0 3px 0 #DDD;
+        box-shadow: unset;
         flex-direction: column;
         align-items: unset;
-        overflow: hidden;   
-        transition: width .15s ease-out;
+        position: static;
 
         &__item__label {
             display: inline-block;
             margin-left: 3em;
+            opacity: 0;
+            transition: opacity .1s linear;
         }
 
         &__item a {
@@ -78,8 +104,12 @@ $sidebar-size: 6em;
         }
     }   
 
-    .nav:hover {
+    .nav:hover::before {
         width: 13em;
+    }
+
+    .nav:hover .nav__item__label {
+        opacity: 1;
     }
 
     .nav ul {
@@ -89,7 +119,4 @@ $sidebar-size: 6em;
         justify-content: unset;
     }
 
-    body {
-        padding-left: calc($sidebar-size + 10px);
-    }
 }
