@@ -1,3 +1,5 @@
+$sidebar-size: 6em;
+
 .nav {
     position: absolute;
     bottom: 0;
@@ -42,5 +44,52 @@
 
     &__item:hover &__item__icon {
         color: #555;
+    }
+}
+
+@media (min-width: 481px) {
+    .nav {
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: $sidebar-size;
+        box-sizing: border-box;
+        box-shadow: 1px 0 3px 0 #DDD;
+        flex-direction: column;
+        align-items: unset;
+        overflow: hidden;   
+        transition: width .15s ease-out;
+
+        &__item__label {
+            display: inline-block;
+            margin-left: 3em;
+        }
+
+        &__item a {
+            display: flex;
+            padding: 1.5em;
+            width: 130%;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        &__item a svg {
+            min-width: 2em;
+        }
+    }   
+
+    .nav:hover {
+        width: 13em;
+    }
+
+    .nav ul {
+        flex: 1;
+        flex-direction: column;
+        align-items: unset;
+        justify-content: unset;
+    }
+
+    body {
+        padding-left: calc($sidebar-size + 10px);
     }
 }
