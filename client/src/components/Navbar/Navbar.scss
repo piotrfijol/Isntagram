@@ -1,0 +1,46 @@
+.nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    background-color: #FFF;
+    box-shadow: 0 -1px 3px 0 #DDD;
+
+    h1 {
+        margin: 0;
+        display: none;
+    }
+
+    ul {
+        list-style-type: none;  
+        padding: 0;
+        display: flex; 
+        align-items: center;
+        justify-content: space-around;
+        flex: 1;
+    }
+
+    ul a {
+        color: #222;
+    }
+
+    &__item__label {
+        display: none;
+    }
+
+    &__item__icon {
+        font-size: 22px;
+    }
+
+    &__item:hover {
+        cursor: pointer;
+    }
+
+    &__item:hover &__item__icon {
+        color: #555;
+    }
+}

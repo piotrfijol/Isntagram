@@ -5,11 +5,13 @@ import Home from './views/Home';
 import Profile from './views/Profile';
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
+import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
     <React.Fragment>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile/:name" element={<Profile />} />
