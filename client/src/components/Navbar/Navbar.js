@@ -20,7 +20,7 @@ export default function Navbar({ hideLocations, authOnly = false }) {
     } else {
       setShouldRender(true);
     }
-  }, [authOnly]);
+  }, [authOnly, user.isLoggedIn]);
 
   const forbiddenLocations = !Array.isArray(hideLocations) || hideLocations.length < 1
     ? ['/signin', '/signup'] 
