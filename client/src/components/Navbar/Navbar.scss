@@ -71,6 +71,8 @@ $sidebar-size: 6rem;
         width: 1.5em;
         height: 1.5em;
         fill: rgb(30, 29, 29);
+        transition: width .1s ease-out,
+            height .1s ease-out;
     }
 
     .nav header {
@@ -103,8 +105,11 @@ $sidebar-size: 6rem;
         align-items: unset;
         position: static;
 
+        &__item {
+            display: flex;
+        }
+
         &__item__label {
-            display: inline-block;
             margin-left: 3em;
             opacity: 0;
             transition: opacity .1s linear;
@@ -113,8 +118,8 @@ $sidebar-size: 6rem;
         &__item a {
             display: flex;
             padding: 1.5em;
-            width: 130%;
             align-items: center;
+            justify-content: center;
             text-decoration: none;
         }
 
@@ -128,7 +133,9 @@ $sidebar-size: 6rem;
         width: calc($sidebar-size + 7rem);
 
         svg {
-            opacity: 0;
+            width: .7rem;
+            height: .7rem;
+            margin-right: 1%;
         }
 
         h1 {
@@ -143,7 +150,13 @@ $sidebar-size: 6rem;
     }
 
     .nav:hover .nav__item__label {
-        opacity: 1;
+        display: inline-block;
+        animation: fadeOut .1s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
 
     .nav ul {
