@@ -5,7 +5,7 @@ import Home from './views/Home';
 import Profile from './views/Profile';
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
