@@ -1,0 +1,46 @@
+.content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container h1 {
+    text-align: center;
+    margin: .8em 0 1em 0;
+    font-weight: 500;
+    font-size: 48px;
+    font-family: 'Dancing Script'
+}
+
+.form-container button {
+    display: block;
+    width: 100%;
+    margin-top:10%;
+    padding: 1em;
+    background-color: rgb(68, 146, 220);
+    color: #FFF;
+    border: none;
+    border-radius: 2px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(78, 156, 230);
+    }
+}
+
+
+.form-container .form-row:nth-child(2) + a {
+    color:rgb(44, 109, 169);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:visited {
+        color:rgb(4, 56, 106);
+    }
+}
+
+.form-row {
+    margin: 1.3em 0;
+}
