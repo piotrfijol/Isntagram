@@ -16,9 +16,9 @@ export default function Navbar({ hideLocations, authOnly = false }) {
 
   useEffect(() => {
     if(authOnly) {
-      shouldRender = setShouldRender(user.isLoggedIn);
+      setShouldRender(user.isLoggedIn);
     } else {
-      shouldRender = setShouldRender(true);
+      setShouldRender(true);
     }
   }, [authOnly]);
 
