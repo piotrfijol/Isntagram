@@ -8,7 +8,7 @@ export default function SignIn() {
     <div className="content-wrapper">
       <div className="form-container">
         <header>
-          <h1>Isntagram</h1>
+          <h1 className="logo">Isntagram</h1>
         </header>
         <form method="POST">
           <div className="form-row">

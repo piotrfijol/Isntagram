@@ -30,7 +30,7 @@ export default function Navbar({ hideLocations, authOnly = false }) {
     <nav className="nav">
         <header>
             <FaCameraRetro />
-            <h1>Isntagram</h1>
+            <h1 className='logo'>Isntagram</h1>
         </header>
         <ul>
             <li className="nav__item">
