@@ -4,6 +4,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    max-width: 3072px;
+    margin: auto;
 }
 
 .form-container h1 {
@@ -15,7 +18,7 @@
 .form-container button {
     display: block;
     width: 100%;
-    margin-top:10%;
+    margin-top: 5%;
     padding: 1em;
     background-color: rgb(68, 146, 220);
     color: #FFF;
@@ -29,7 +32,7 @@
 }
 
 
-.form-container .form-row:nth-child(2) + a {
+a {
     color:rgb(44, 109, 169);
     text-decoration: none;
     font-weight: 500;
