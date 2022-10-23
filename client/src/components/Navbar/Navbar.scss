@@ -20,6 +20,7 @@ $sidebar-size: 6rem;
     background-color: #FFF;
     box-shadow: 0 -1px 3px 0 #DDD;
     position: fixed;
+    z-index: 999999;
     bottom: 0;
 
     header {
@@ -97,7 +98,6 @@ $sidebar-size: 6rem;
     .nav {
         height: 100vh;
         position: relative;
-        z-index: 1000;
         width: $sidebar-size;
         box-sizing: border-box;
         box-shadow: unset;
