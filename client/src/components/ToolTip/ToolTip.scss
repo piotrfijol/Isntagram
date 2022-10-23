@@ -1,0 +1,33 @@
+.tool-tip-target {
+    position: relative;
+    display: inline-block;
+}
+
+.tool-tip {
+    padding: .5em 1em;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFF;
+    position: absolute;
+    border-radius: 12px;
+    z-index: 10000;
+
+    &.left {
+        left: -150%;
+        top: -25%;
+    }
+
+    &.bottom {
+        left: -25%;
+        top: 100%;
+    }
+
+    &.right {
+        left: 100%;
+        top: -25%;
+    }
+
+    &.top {
+        left: -25%;
+        top: -100%;
+    }
+}
