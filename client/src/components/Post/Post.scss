@@ -1,0 +1,93 @@
+$post-padding: .5em;
+
+.post {
+    padding: $post-padding;
+    padding-top: $post-padding - .3em;
+    max-width: calc(100vw - 2 * $post-padding);
+    width: 100%;
+    margin: 0;
+    background-color: #FFF;
+    padding-bottom: $post-padding + .5em;
+
+    &__header {
+        margin-left: .3em;
+        display: flex;
+        align-items: center;
+
+        &__avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &__username {
+            margin-left: .5em;
+            font-weight: 600;
+            color: #444;
+        }
+    }
+
+    &__picture {
+        height: auto;
+        margin: 0;
+
+        img {
+            width: 100%;
+            padding: 0;
+        }
+    }
+
+    button {
+        background: none;
+        border: none;
+        font-size: 16px;
+        padding: .5em;
+        padding-top: .2em;
+
+        svg {
+            fill: #333;
+        }
+    }
+    
+    &__metadata {
+        padding: 0 .6em;
+
+        &__likes {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        &__comments {
+            margin: .7em 0;
+            font-weight: 600;
+        }
+    }
+
+    form input {
+        border: 1px solid #CCC;
+        padding: .5em;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (min-width: 481px) {
+
+    .post {
+        margin: auto;
+        margin-top: 5rem;
+        max-width: 720px;
+        &__picture {
+        }
+
+        &__actions {
+            padding: .3em 0;
+        }
+    }
+}
