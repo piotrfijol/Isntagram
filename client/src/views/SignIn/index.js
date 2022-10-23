@@ -26,7 +26,7 @@ export default function SignIn() {
               label="Password" 
             />
           </div>
-          Don't have an account? <Link to="/signup">Sign up now</Link>.
+          <p className="neglible">Don't have an account? <Link to="/signup">Sign up now</Link>.</p>
           <button>Sign in</button>
         </form>
       </div>
