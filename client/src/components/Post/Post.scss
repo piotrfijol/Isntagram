@@ -9,34 +9,21 @@ $post-padding: .5em;
     background-color: #FFF;
     padding-bottom: $post-padding + .5em;
 
-    &__header {
-        margin-left: .3em;
-        display: flex;
-        align-items: center;
-
-        &__avatar {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        &__username {
-            margin-left: .5em;
-            font-weight: 600;
-            color: #444;
-        }
+    &__wrapper {
+        position: relative;
     }
 
+    &__wrapper .post__header {
+        display: none;
+    }
+    
     &__picture {
         height: auto;
         margin: 0;
 
         img {
+        max-height: 600px;
+        object-fit: cover;  
             width: 100%;
             padding: 0;
         }
@@ -74,7 +61,28 @@ $post-padding: .5em;
         padding: .5em;
         width: 100%;
         box-sizing: border-box;
+        position: absolute;
+        bottom: 0;
     }
+}
+
+
+
+.post.preview {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    max-width: 1024px;
+    margin-bottom: clamp(50px, 15%, 250px);
+
+    & .post__wrapper .post__header:nth-of-type(1) {
+        display: none;
+    }
+
+    .post__wrapper {
+        min-width: 250px;
+    }
+
 }
 
 @media (min-width: 481px) {
@@ -83,11 +91,21 @@ $post-padding: .5em;
         margin: auto;
         margin-top: 5rem;
         max-width: 720px;
-        &__picture {
-        }
 
         &__actions {
             padding: .3em 0;
+        }
+    }
+
+    .post.preview {
+        flex-direction: row;
+        
+        & .post__wrapper .post__header:nth-of-type(1) {
+            display: flex;
+        }
+
+        & > .post__header:nth-of-type(1) {
+            display: none;
         }
     }
 }
