@@ -41,19 +41,11 @@ $post-padding: .5em;
         }
     }
     
-    &__metadata {
-        padding: 0 .6em;
 
-        &__likes {
-            margin: 0;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        &__comments {
-            margin: .7em 0;
-            font-weight: 600;
-        }
+    &__likes {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
     }
 
     form input {
@@ -61,8 +53,6 @@ $post-padding: .5em;
         padding: .5em;
         width: 100%;
         box-sizing: border-box;
-        position: absolute;
-        bottom: 0;
     }
 }
 
@@ -76,11 +66,22 @@ $post-padding: .5em;
     margin-bottom: clamp(50px, 15%, 250px);
 
     & .post__wrapper .post__header:nth-of-type(1) {
-        display: none;
+        display: flex;
+    }
+
+    .post__comments {
+        flex: 1;
     }
 
     .post__wrapper {
         min-width: 250px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post__comment-form  {
+        margin-top: auto;
+        bottom: 0;
     }
 
 }
@@ -99,6 +100,10 @@ $post-padding: .5em;
 
     .post.preview {
         flex-direction: row;
+        
+        .post__actions {
+            padding: .5em;
+        }
         
         & .post__wrapper .post__header:nth-of-type(1) {
             display: flex;
