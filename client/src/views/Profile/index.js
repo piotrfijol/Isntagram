@@ -1,4 +1,5 @@
 import React from 'react'
+import './Profile.scss'
 
 export default function Profile() {
   return (
@@ -17,15 +18,25 @@ export default function Profile() {
                 <p className="profile__info__bio">Follow me on other social media: Snapchat.. Tiktok.. Yt..</p>
             </div>
         </div>
-        <div className="profile__gallery">
-            <img 
-                src="https://images.pexels.com/photos/2272940/pexels-photo-2272940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="A woman taking a picture"
-            />
-            <img 
-                src="https://images.pexels.com/photos/416024/pexels-photo-416024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="A harbor with boats in it"
-            />  
+        <div className="profile-gallery">
+            <div className="profile-gallery__image">
+                <img 
+                    src="https://images.pexels.com/photos/2272940/pexels-photo-2272940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="A woman taking a picture"
+                />
+            </div>
+            <div className="profile-gallery__image">
+                <img 
+                    src="https://images.pexels.com/photos/416024/pexels-photo-416024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="A harbor with boats in it"
+                />
+            </div>  
+            <div className="profile-gallery__image">
+                <img 
+                    src="https://images.pexels.com/photos/2272940/pexels-photo-2272940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="A woman taking a picture"
+                />
+            </div>
         </div>
     </div>
   )
