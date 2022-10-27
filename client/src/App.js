@@ -6,6 +6,8 @@ import Profile from './views/Profile';
 import SignIn from './views/SignIn';
 import SignUp from './views/SignUp';
 import Navbar from './components/Navbar';
+import Explore from './views/Explore';
+import PostPreview from './views/PostPreview';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/profile/:name" element={<Profile />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/p/:postId" element={<PostPreview />} />
           </Routes>
         </div>
       </Router>
