@@ -1,0 +1,44 @@
+:root {
+    --thumbnail-size: 90px;
+}
+ 
+.posts-gallery {
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 1024px;
+    display: grid;
+    justify-content: center;
+    gap: .4rem;
+    grid-template-columns: repeat(3, var(--thumbnail-size));
+
+    &__thumbnail {
+        height: var(--thumbnail-size);
+        width: var(--thumbnail-size);
+
+        img {
+            object-fit: cover;
+            height: 100%;
+            max-width: var(--thumbnail-size);
+        }
+    }
+}
+
+
+
+@media (min-width: 481px) {
+    :root {
+        --thumbnail-size: 120px;
+    } 
+}
+
+@media (min-width: 648px) {
+    :root {
+        --thumbnail-size: 180px;
+    } 
+}
+
+@media (min-width: 941px) {
+    :root {
+        --thumbnail-size: 260px;
+    } 
+}
