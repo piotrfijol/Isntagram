@@ -7,7 +7,10 @@ const createUser = (req, res) => {
     userModel.find().where({username}).or({email}).exec()
     .then(async (data) => {
         if(data.length)
-            return res.send("The username or email is already taken")
+            return res.status(409).json({
+                statusCode: 409,
+                message: "Username or email is already taken",
+            })
         else {
 
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -20,10 +23,16 @@ const createUser = (req, res) => {
 
             user.save()
             .then((data) => {
-                res.send("Account has been created successfully!");
+                res.status(201).json({
+                    statusCode: 201,
+                    message: "Account was created successfully",
+                })
             })
             .catch((err) => {
-                res.send("Error has occured!");
+                res.json({
+                    statusCode: 500,
+                    message: "Server internal error occurred while creating an account",
+                });
             });
         }
     });
