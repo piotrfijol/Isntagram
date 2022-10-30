@@ -8,6 +8,27 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.post('/signin',
+body("username")
+  .exists()
+  .matches(/^[A-Za-z0-9\.]+$/)
+  .isLength({max: 30}),
+body("password")
+  .isLength({min: 8}),
+  (req, res, next) => {
+    let {errors} = validationResult(req);
+
+    if(errors.length > 0) {
+      return res.json({
+        errors
+    });
+    } else {
+      next();
+    }
+  },
+  userController.authenticateUser
+);
+
 router.post('/signup', 
 body("username")
   .exists()
