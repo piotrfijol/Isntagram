@@ -3,13 +3,6 @@ const userModel = require("../models/User");
 const createUser = (req, res) => {
     const { username, password, email } = req.body;
 
-    console.log("New password arrived\n========================")
-    console.log("pwd= " + req.body.password)
-    console.log("pwdLen= " + req.body.password.length);
-    res.send("Registered!");
-
-
-    /*
     let user = new userModel({
         username,
         password,
@@ -23,7 +16,6 @@ const createUser = (req, res) => {
         .catch((err) => {
             res.send("Error has occured!");
         });
-    */
 };
 
 
