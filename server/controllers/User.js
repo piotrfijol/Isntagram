@@ -1,17 +1,19 @@
 const userModel = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config()
 
 const createUser = (req, res) => {
     const { username, password, email } = req.body;
 
     userModel.find().where({username}).or({email}).exec()
     .then(async (data) => {
-        if(data.length)
+        if(data.length) {
             return res.status(409).json({
                 statusCode: 409,
                 message: "Username or email is already taken",
             })
-        else {
+        } else {
 
             const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -38,7 +40,29 @@ const createUser = (req, res) => {
     });
 };
 
+const authenticateUser = (req, res) => {
+    const { username, password } = req.body;
+
+    userModel.findOne({ username })
+    .then(async (user) => {
+        if(user !== null && bcrypt.compareSync(password, user.password)) {
+            let token = await jwt.sign({
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            }, process.env.JWT_SECRET)
+
+            return res.json({token})
+        } else {
+            return res.status(422).json({
+                message: "Invalid credentials",
+                statusCode: 422
+            })
+        }
+    })
+};
 
 module.exports = {
-    createUser
+    createUser,
+    authenticateUser
 }
