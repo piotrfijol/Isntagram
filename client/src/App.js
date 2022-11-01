@@ -8,6 +8,7 @@ import SignUp from './views/SignUp';
 import Navbar from './components/Navbar';
 import Explore from './views/Explore';
 import PostPreview from './views/PostPreview';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,12 +17,14 @@ function App() {
         <Navbar />
         <div className='content'>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile/:name" element={<Profile />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/p/:postId" element={<PostPreview />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile/:name" element={<Profile />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/p/:postId" element={<PostPreview />} />
+            </Route>
           </Routes>
         </div>
       </Router>
