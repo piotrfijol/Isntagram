@@ -5,8 +5,8 @@ require("dotenv").config()
 
 const createUser = (req, res) => {
     const { username, password, email } = req.body;
-
-    userModel.find().where({username}).or({email}).exec()
+    
+    userModel.find({$or: [{username}, {email}]})
     .then(async (data) => {
         if(data.length) {
             return res.status(409).json({
