@@ -13,6 +13,10 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
+    },
+    refreshToken: {
+        type: String,
+        required: true,
     }
 });
 

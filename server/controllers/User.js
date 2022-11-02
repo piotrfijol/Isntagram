@@ -31,10 +31,7 @@ const createUser = (req, res) => {
                 })
             })
             .catch((err) => {
-                res.json({
-                    statusCode: 500,
-                    message: "Server internal error occurred while creating an account",
-                });
+                throw new Error("Server internal error occurred while creating an account");
             });
         }
     });
@@ -44,16 +41,43 @@ const authenticateUser = (req, res) => {
     const { username, password } = req.body;
 
     userModel.findOne({ username })
-    .then(async (user) => {
+    .then((user) => {
         if(user !== null && bcrypt.compareSync(password, user.password)) {
-            let token = await jwt.sign({
-                _id: user._id,
-                username: user.username,
-                email: user.email
-            }, process.env.JWT_SECRET)
+            let accessToken = jwt.sign({
+                    _id: user._id,
+                }, 
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '5min'});
+            
+            let refreshToken = jwt.sign({
+                    _id: user._id,
+                }, 
+                process.env.REFRESH_TOKEN_SECRET,
+                { expiresIn: '1d'});
+            
 
-            return res.json({token})
-        } else {
+            Promise.all([accessToken, refreshToken])
+                .then(async ([accessToken, refreshToken]) => {
+                    const { _id, username } = user;
+
+                    user.refreshToken = refreshToken;
+                    try {
+                        await user.save();
+                    } catch(err) {
+                        throw new Error("Authentication problem occured. Try again later");
+                    }
+
+                    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+                    res.json({
+                        _id,
+                        username,
+                        accessToken,
+                    })
+                }).catch((err) => {
+                    throw new Error("Authentication problem occured. Try again later");
+                });
+
+            } else {
             return res.status(422).json({
                 message: "Invalid credentials",
                 statusCode: 422
