@@ -1,9 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import TextInput from '../../components/TextInput'
 import './SignUp.scss';
 
 export default function SignUp() {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const sendSignupForm = (ev) => {
+    ev.preventDefault();
+
+    fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        repeatPassword,
+        email
+      })
+    }).then(data => data.json()).then(jsonData => {
+      if(jsonData.statusCode === 201) {
+        window.location.replace("/signin");
+      }
+      alert(jsonData.message)
+    })
+  };
+
+
   return (
     <div className="content-wrapper">
       <div className="photo-wrapper">
@@ -30,12 +59,14 @@ export default function SignUp() {
         <header>
           <h1 className="logo">Isntagram</h1>
         </header>
-        <form method="POST">
+        <form method="POST" onSubmit={sendSignupForm}>
           <div className="form-row">
             <TextInput 
               id="login" 
               name="login" 
-              label="Login" 
+              label="Login"
+              value={username}
+              onChange={(e) => setUsername(e.currentTarget.value)}
             />
           </div>
           <div className="form-row">
@@ -44,6 +75,8 @@ export default function SignUp() {
               id="password" 
               name="password" 
               label="Password" 
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
             />
           </div>
           <div className="form-row">
@@ -52,6 +85,8 @@ export default function SignUp() {
               id="repeat-password" 
               name="repeat-password" 
               label="Repeat password" 
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.currentTarget.value)}
             />
           </div>
           <div className="form-row">
@@ -60,14 +95,16 @@ export default function SignUp() {
               id="email" 
               name="email" 
               label="Email" 
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
             />
           </div>
           <div className="form-row">
             <input type="checkbox" name="tos" id="tos-agreement" required/>
             <label htmlFor="tos-agreement">I accept and agree to the <a href="#">Terms Of Service</a></label>
           </div>
-          <p class="neglible">Already have an account? <Link to="/signin">Sign in</Link>.</p>
-          <button>Sign Up</button>
+          <p className="neglible">Already have an account? <Link to="/signin">Sign in</Link>.</p>
+          <button type="submit">Sign Up</button>
         </form>
       </div>
     </div>
