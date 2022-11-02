@@ -41,7 +41,7 @@ const authenticateUser = (req, res) => {
     const { username, password } = req.body;
 
     userModel.findOne({ username })
-    .then((user) => {
+    .then(async (user) => {
         if(user !== null && bcrypt.compareSync(password, user.password)) {
             let accessToken = jwt.sign({
                     _id: user._id,
@@ -54,27 +54,21 @@ const authenticateUser = (req, res) => {
                 }, 
                 process.env.REFRESH_TOKEN_SECRET,
                 { expiresIn: '1d'});
-            
 
-            Promise.all([accessToken, refreshToken])
-                .then(async ([accessToken, refreshToken]) => {
-                    const { _id, username } = user;
+                const { _id, username } = user;
 
-                    user.refreshToken = refreshToken;
-                    try {
-                        await user.save();
-                    } catch(err) {
-                        throw new Error("Authentication problem occured. Try again later");
-                    }
-
-                    res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-                    res.json({
-                        _id,
-                        username,
-                        accessToken,
-                    })
-                }).catch((err) => {
+                user.refreshToken = refreshToken;
+                try {
+                    await user.save();
+                } catch(err) {
                     throw new Error("Authentication problem occured. Try again later");
+                }
+
+                res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+                res.json({
+                    _id,
+                    username,
+                    accessToken,
                 });
 
             } else {
