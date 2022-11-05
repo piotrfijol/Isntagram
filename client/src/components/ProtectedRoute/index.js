@@ -1,12 +1,13 @@
 import React from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth';
 
-export default function ProtectedRoute({ user }) {
-    const location = useLocation();
+export default function ProtectedRoute() {
+    const {auth} = useAuth();
 
   return (
-    user 
+    auth
         ? <Outlet />
-        : <Navigate to="/signin" state={ {from: location} } replace/>
+        : null
   )
 }
