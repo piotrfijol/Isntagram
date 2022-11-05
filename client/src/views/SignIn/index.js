@@ -1,33 +1,40 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import TextInput from '../../components/TextInput'
 import './SignIn.scss';
+import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function SignIn() {
-
+  
+  const {auth, setAuth} = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const sendSignInForm = (ev) => {
     ev.preventDefault();
 
-    fetch("/api/signin", {
-      method: "POST",
+    axios({
+      method: 'post',
+      url: '/api/signin',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
+      data: {
         username,
         password
-      })
-    }).then(data => data.json()).then(jsonData => {
-      localStorage.setItem("_jwt", jsonData.token);
-      alert("Logged in");
-      window.location.replace("/");
+      }
+    }).then(jsonData => {
+      setAuth(jsonData.data);
+      console.log("Logged in");
+      navigate("/");
     })
   };
 
-  return (
+  return ( !auth
+    ? (
     <div className="content-wrapper">
       <div className="form-container">
         <header>
@@ -58,5 +65,7 @@ export default function SignIn() {
         </form>
       </div>
     </div>
+    )
+    : <Navigate to="/" state={ {from: location} } replace/>
   )
 }
