@@ -1,6 +1,6 @@
 import './App.scss';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
-import React from 'react';
+import { Routes, Route } from 'react-router-dom'; 
+import React, { useEffect } from 'react';
 import Home from './views/Home';
 import Profile from './views/Profile';
 import SignIn from './views/SignIn';
@@ -9,11 +9,13 @@ import Navbar from './components/Navbar';
 import Explore from './views/Explore';
 import PostPreview from './views/PostPreview';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useSetup } from './hooks/useSetup';
 
 function App() {
+  useSetup();
+  
   return (
     <React.Fragment>
-      <Router>
         <Navbar />
         <div className='content'>
           <Routes>
@@ -27,7 +29,6 @@ function App() {
             </Route>
           </Routes>
         </div>
-      </Router>
     </React.Fragment>
   );
 }
