@@ -2,25 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Navbar.scss'
 import { FaHome, FaCompass, FaUser, FaCameraRetro } from 'react-icons/fa'
+import { useAuth } from '../../hooks/useAuth';
 
-export default function Navbar({ hideLocations, authOnly = false }) {
+export default function Navbar({ hideLocations, authOnly = true }) {
 
   let location = useLocation();
-  let [shouldRender, setShouldRender] = useState(true);
-
-  // Mock the user context
-  const user = {
-    name: "name",
-    isLoggedIn: true
-  }
+  let [shouldRender, setShouldRender] = useState(false);
+  const {auth} = useAuth();
 
   useEffect(() => {
     if(authOnly) {
-      setShouldRender(user.isLoggedIn);
+      setShouldRender(auth !== null);
     } else {
       setShouldRender(true);
     }
-  }, [authOnly, user.isLoggedIn]);
+  }, [authOnly, auth]);
 
   const forbiddenLocations = !Array.isArray(hideLocations) || hideLocations.length < 1
     ? ['/signin', '/signup'] 
@@ -46,7 +42,7 @@ export default function Navbar({ hideLocations, authOnly = false }) {
               </Link>
             </li>
             <li className="nav__item">
-              <Link to={`/profile/${user.name}`}>
+              <Link to={`/profile/${auth.username}`}>
                 <FaUser className="nav__item__icon" />
                 <span className="nav__item__label">Profile</span>
               </Link>
