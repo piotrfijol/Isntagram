@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const userController = require("../controllers/User");
+const { verifyJWT } = require("../middleware/verifyJWT");
+const { useRefreshToken } = require("../controllers/RefreshToken")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -82,5 +84,14 @@ body("email")
   },
   userController.createUser
 );
+
+router.get("/refresh-token", 
+  useRefreshToken
+  );
+
+router.post("/logout", 
+  verifyJWT,
+  userController.logout
+)
 
 module.exports = router;
