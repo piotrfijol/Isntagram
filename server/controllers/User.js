@@ -80,7 +80,26 @@ const authenticateUser = (req, res) => {
     })
 };
 
+const logout = async (req, res, next) => {
+    const accessToken = req.headers.authorization.split(' ')[1];
+
+    const payload = jwt.decode(accessToken);
+
+    const user = await userModel.find({_id: payload._id});
+    if(user) {
+        user.refreshToken = "";
+        res.clearCookie("refreshToken");
+        
+        res.status(204).json({
+            statusCode: 204,
+            message: "Succesfully logged out"
+        });
+    }
+
+};
+
 module.exports = {
     createUser,
-    authenticateUser
+    authenticateUser,
+    logout
 }
