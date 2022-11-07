@@ -10,6 +10,7 @@ import Explore from './views/Explore';
 import PostPreview from './views/PostPreview';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useSetup } from './hooks/useSetup';
+import { SignOut } from './views/SignOut';
 
 function App() {
   useSetup();
@@ -26,6 +27,7 @@ function App() {
               <Route path="/profile/:name" element={<Profile />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/p/:postId" element={<PostPreview />} />
+              <Route path="/logout" element={<SignOut />} />
             </Route>
           </Routes>
         </div>
