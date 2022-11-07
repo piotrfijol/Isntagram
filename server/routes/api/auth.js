@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const userController = require("../controllers/User");
-const { verifyJWT } = require("../middleware/verifyJWT");
-const { useRefreshToken } = require("../controllers/RefreshToken")
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const userController = require("../../controllers/User");
+const { verifyJWT } = require("../../middleware/verifyJWT");
+const { useRefreshToken } = require("../../controllers/RefreshToken")
 
 router.post('/signin',
 body("username")
