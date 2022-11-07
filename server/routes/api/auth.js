@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const authController = require("../../controllers/Auth");
+const authController = require("../../controllers/auth");
 const { verifyJWT } = require("../../middleware/verifyJWT");
-const { useRefreshToken } = require("../../controllers/RefreshToken")
+const { useRefreshToken } = require("../../controllers/refreshToken")
 
 router.post('/signin',
 body("username")
