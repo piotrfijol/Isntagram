@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
+import axios from '../../api/axios';
 import TextInput from '../../components/TextInput'
+import { useAuth } from '../../hooks/useAuth';
 import './SignUp.scss';
 
 export default function SignUp() {
@@ -9,21 +11,23 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [email, setEmail] = useState("");
+  const {auth} = useAuth();
+  const location = useLocation();
 
   const sendSignupForm = (ev) => {
     ev.preventDefault();
 
-    fetch("/api/signup", {
+    axios("/api/signup", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
+      data: {
         username,
         password,
         repeatPassword,
         email
-      })
+      }
     }).then(data => data.json()).then(jsonData => {
       if(jsonData.statusCode === 201) {
         window.location.replace("/signin");
@@ -33,7 +37,8 @@ export default function SignUp() {
   };
 
 
-  return (
+  return ( !auth 
+    ? (
     <div className="content-wrapper">
       <div className="photo-wrapper">
         <div className="photo-collection">
@@ -108,5 +113,7 @@ export default function SignUp() {
         </form>
       </div>
     </div>
+    )
+    : <Navigate to="/" state={ {from: location} } replace/>
   )
 }
