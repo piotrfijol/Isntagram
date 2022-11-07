@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
-const userController = require("../../controllers/User");
+const authController = require("../../controllers/Auth");
 const { verifyJWT } = require("../../middleware/verifyJWT");
 const { useRefreshToken } = require("../../controllers/RefreshToken")
 
@@ -23,7 +23,7 @@ body("password")
       next();
     }
   },
-  userController.authenticateUser
+  authController.authenticateUser
 );
 
 router.post('/signup', 
@@ -77,7 +77,7 @@ body("email")
 
     next();
   },
-  userController.createUser
+  authController.createAccount
 );
 
 router.get("/refresh-token", 
@@ -86,7 +86,7 @@ router.get("/refresh-token",
 
 router.post("/logout", 
   verifyJWT,
-  userController.logout
+  authController.logOut
 )
 
 module.exports = router;

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config()
 
-const createUser = (req, res) => {
+const createAccount = (req, res) => {
     const { username, password, email } = req.body;
     
     userModel.find({$or: [{username}, {email}]})
@@ -80,7 +80,7 @@ const authenticateUser = (req, res) => {
     })
 };
 
-const logout = async (req, res, next) => {
+const logOut = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
 
     const payload = jwt.decode(accessToken);
@@ -99,7 +99,7 @@ const logout = async (req, res, next) => {
 };
 
 module.exports = {
-    createUser,
+    createAccount,
     authenticateUser,
-    logout
+    logOut
 }
