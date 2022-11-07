@@ -1,3 +1,4 @@
+const userModel = require("../models/user");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -10,11 +11,22 @@ exports.verifyJWT = async (req, res, next) => {
                 statusCode: 401
             });
         }
+        const token = authorizationHeader.split(' ')[1];
 
-        let result = jwt.verify(authorizationHeader.split(' ')[1], process.env.ACCESS_TOKEN_SECRET);
-        if(result) {
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
+            if(err) throw new Error("Token invalid");
+
+            const user = await userModel.find(
+                    {_id: payload._id}, 
+                    {_id: 1, username: 1, email: 1}
+                );
+
+            req.user = user;
+            req.jwt = token;
+
             return next();
-        } 
+        });
+
     } catch(err) {
         return res.status(403).json({
             message: "Forbidden",
