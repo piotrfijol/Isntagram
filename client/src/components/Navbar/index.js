@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Navbar.scss'
-import { FaHome, FaCompass, FaUser, FaCameraRetro } from 'react-icons/fa'
+import { FaHome, FaCompass, FaUser, FaCameraRetro, FaSignOutAlt } from 'react-icons/fa'
 import { useAuth } from '../../hooks/useAuth';
 
 export default function Navbar({ hideLocations, authOnly = true }) {
@@ -45,6 +45,12 @@ export default function Navbar({ hideLocations, authOnly = true }) {
               <Link to={`/profile/${auth.username}`}>
                 <FaUser className="nav__item__icon" />
                 <span className="nav__item__label">Profile</span>
+              </Link>
+            </li>
+            <li className="nav__item">
+              <Link to={`/logout`}>
+                <FaSignOutAlt className="nav__item__icon" />
+                <span className="nav__item__label">Logout</span>
               </Link>
             </li>
         </ul>
