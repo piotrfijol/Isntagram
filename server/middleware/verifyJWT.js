@@ -14,9 +14,14 @@ exports.verifyJWT = async (req, res, next) => {
         const token = authorizationHeader.split(' ')[1];
 
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, payload) => {
-            if(err) throw new Error("Token invalid");
+            if(err) {
+                return res.status(401).json({
+                    statusCode: 403,
+                    message: "Invalid token"
+                })
+            }
 
-            const user = await userModel.find(
+            const user = await userModel.findOne(
                     {_id: payload._id}, 
                     {_id: 1, username: 1, email: 1}
                 );
