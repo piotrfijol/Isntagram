@@ -22,7 +22,7 @@ const createPost = async (req, res) => {
     }
 
     const post = new postModel();
-    post.userId = req.user._id;
+    post.user = req.user._id;
     post.imgURL = storageResponse.url,
     post.description = description;
     post.tags = [tags];
@@ -53,8 +53,11 @@ const getAnyPosts = async (req, res) => {
     });
 };
 
-const getPost = (req, res) => {
+const getPost = async (req, res) => {
+    const {id} = req.params;
 
+    const post = await postModel.findOne({_id: id}, "-_id -__v -updatedAt").populate("user", "username -_id");
+    res.status(200).json(post);
 };
 
 const getPosts = (req, res) => {
