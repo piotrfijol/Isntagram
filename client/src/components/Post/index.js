@@ -5,25 +5,29 @@ import PostCommentSection from '../PostCommentSection';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa'
 import './Post.scss'
 
+const defaultPost = {
+    description: "",
+    imgURL: ""
+}
 
-export default function Post({ variant = "" }) {
+export default function Post({ variant = "", post = defaultPost }) {
 
     const isPreview = () => {return variant === "preview"}
 
   return (
     <div className={"post " + (isPreview() ? "preview" : "")}>
-        { !isPreview() ? <UserHeader className="post__header" /> : null }
+        { !isPreview() ? <UserHeader className="post__header" user={post.user}/> : null }
         <div className="post__picture">
-            <img src="https://images.pexels.com/photos/2272940/pexels-photo-2272940.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+            <img src={post.imgURL} />
         </div>
 
         <div className="post__wrapper">
             {isPreview() 
                 ? (
                     <React.Fragment>
-                        <UserHeader className="post__header" />            
+                        <UserHeader className="post__header" user={post.user}/>            
                         <p className="post__description">
-                            Lorem ipsum, sample text...
+                            {post.description}
                         </p>
                         <PostCommentSection 
                             postId={0} 
@@ -45,7 +49,7 @@ export default function Post({ variant = "" }) {
                         <p className="post__likes">9,000 likes</p>
                         </div>
                         <p className="post__description">
-                            Lorem ipsum, sample text...
+                            {post.description}
                         </p>
                         <PostCommentSection 
                             postId={0}  
