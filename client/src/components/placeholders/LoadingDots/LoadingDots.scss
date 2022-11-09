@@ -1,0 +1,33 @@
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: .7rem;
+
+    &__dot {
+        border-radius: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-color: rgb(0, 0, 0);
+        opacity: .3;
+        transform: translateY(-5px) scale(.7);
+        animation-name: dot-fall;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+        
+    }
+
+    &__dot:nth-child(2) {
+        animation-delay: .3s;
+    } 
+
+    &__dot:nth-child(3) {
+        animation-delay: .6s;
+    }
+
+}
+@keyframes dot-fall {
+    50% {transform: translateY(0) scale(1); opacity: .45;};
+}
