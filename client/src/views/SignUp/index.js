@@ -28,7 +28,7 @@ export default function SignUp() {
         repeatPassword,
         email
       }
-    }).then(data => data.json()).then(jsonData => {
+    }).then(jsonData => {
       if(jsonData.statusCode === 201) {
         window.location.replace("/signin");
       }
