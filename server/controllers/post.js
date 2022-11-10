@@ -4,18 +4,32 @@ const storage = require("../utils/storage");
 const DataURIParser = require("datauri/parser");
 const path = require("path");
 
+const uploadImage = (file, width) => {
+
+    if(!Number.isInteger(width)) throw new TypeError("Width must be an integer number");
+
+    const fileParser = new DataURIParser();
+    const extName = path.extname(file.originalname).toString();
+    const fileContent = fileParser.format(extName, file.buffer);
+
+    return storage.uploader.upload(fileContent.content, {
+        transformation: [
+            {crop: "scale", width},
+            {crop: "fill", width, aspect_ratio: "4:3", gravity: "auto"}
+        ],
+        folder: `posts/${width}`
+    })
+
+};
+
 const createPost = async (req, res) => {
     const {description, tags} = req.body;
 
-    let storageResponse;
-    try {
-        const fileParser = new DataURIParser();
-        const extName = path.extname(req.file.originalname).toString();
-        const fileContent = fileParser.format(extName, req.file.buffer);
+    let storageResponses;
 
-        storageResponse = await storage.uploader.upload(fileContent.content, {
-            folder: "posts"
-        });
+    try {
+        let storageRequests = [uploadImage(req.file, 1280), uploadImage(req.file, 480)];
+        storageResponses = await Promise.all(storageRequests);
 
     } catch(err) {
         console.log(err)
@@ -23,7 +37,10 @@ const createPost = async (req, res) => {
 
     const post = new postModel();
     post.user = req.user._id;
-    post.imgURL = storageResponse.url,
+    post.imgURL = {
+        "1280": storageResponses[0].url,
+        "480": storageResponses[1].url
+    },
     post.description = description;
     post.tags = [tags];
 
@@ -41,7 +58,7 @@ const getAnyPosts = async (req, res) => {
     const posts = await postModel.find().limit(10);
 
     if(!posts.length) {
-        res.status(404).json({
+        return res.status(404).json({
             statusCode: 404,
             message: "No posts available"
         });
