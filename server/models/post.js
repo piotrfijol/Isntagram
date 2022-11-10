@@ -12,7 +12,10 @@ const postSchema = new Schema({
             maxLength: 360
         },
         imgURL: {
-            type: String,
+            type: {
+                "1280": {type: String},
+                "480": {type: String}
+            },
             required: true
         },
         tags: [String],
