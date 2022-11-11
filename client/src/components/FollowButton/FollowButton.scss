@@ -1,0 +1,23 @@
+.follow-btn {
+    margin-top: 2rem;
+    padding: 1em 2.5em;
+    background-color: rgb(37, 123, 228);
+    border-radius: 6px;
+    color: #FFF;
+    border: none;
+    box-shadow: 0 0 3px 0 #AAA;
+
+    &--active {
+        background-color: rgb(231, 231, 231);
+        color: rgb(63, 62, 62);
+    }
+
+    &:hover {
+        cursor: pointer;
+        opacity: .9;
+    }
+
+    &__icon {
+        margin-right: .5em;
+    }
+}
