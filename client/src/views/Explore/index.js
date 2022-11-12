@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { PostThumbnail } from '../../components/PostThumbnail';
 import usePrivateAxios from '../../hooks/usePrivateAxios';
 import './Explore.scss';
 
@@ -29,11 +30,7 @@ export default function Explore() {
             posts.map((post) => {
                 return (
                     <Link to={`/p/${post._id}`} >
-                        <div className="posts-gallery__thumbnail">
-                            <img 
-                                src={post.imgURL}
-                            />
-                        </div>
+                        <PostThumbnail post={post} className="posts-gallery__thumbnail"/>
                     </Link>
                 ) 
             })

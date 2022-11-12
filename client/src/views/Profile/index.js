@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { FollowButton } from '../../components/FollowButton';
+import { PostThumbnail } from '../../components/PostThumbnail';
 import { useAuth } from '../../hooks/useAuth';
 import usePrivateAxios from '../../hooks/usePrivateAxios';
 import './Profile.scss'
@@ -64,12 +65,7 @@ export default function Profile() {
             {userData.posts.map((post) => {
                 return (
                     <Link to={`/p/${post._id}`} key={post._id}>
-                        <div className="profile-gallery__image">
-                            <img 
-                                src={post.imgURL[480]}
-                                alt="A woman taking a picture"
-                            />
-                        </div>
+                        <PostThumbnail post={post} className="profile-gallery__image"/>
                     </Link>
                 )
             })}
