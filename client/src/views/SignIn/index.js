@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import TextInput from '../../components/TextInput'
 import './SignIn.scss';
-import axios from 'axios';
+import axios from '../../api/axios';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function SignIn() {
