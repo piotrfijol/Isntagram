@@ -1,0 +1,14 @@
+$like-color: rgb(245, 24, 24);
+
+.like-btn {
+
+    &--active svg {
+        animation: bounce .4s ease-out forwards;
+    }
+}
+
+@keyframes bounce {
+    0% {transform: scale(.7)}
+    50% {transform: scale(1.1); fill: $like-color;}
+    100% {transform: scale(1); fill: $like-color;}
+}
