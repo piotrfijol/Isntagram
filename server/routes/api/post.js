@@ -34,15 +34,19 @@ router.delete("/post/:id",
 );
 
 router.put("/post/:id/like",
-    verifyJWT,
     likeController.like
 );
 
 router.delete("/post/:id/like",
-    verifyJWT,
     likeController.unlike
 );
 
-router.get("/post/:id/likes");
+router.get("/post/:id/like",
+    likeController.isLiked
+);
+
+router.get("/post/:id/likes",
+    likeController.getLikes
+);
 
 module.exports = router;
