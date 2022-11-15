@@ -1,5 +1,6 @@
 const postModel = require("../models/post");
 const userModel = require("../models/user");
+const likeModel = require("../models/like");
 const storage = require("../utils/storage");
 const DataURIParser = require("datauri/parser");
 const path = require("path");
@@ -55,7 +56,7 @@ const createPost = async (req, res) => {
 };
 
 const getAnyPosts = async (req, res) => {
-    const posts = await postModel.find().limit(10);
+    const posts = await postModel.find({}, "-imgURL._id").limit(10);
 
     if(!posts.length) {
         return res.status(404).json({
@@ -73,8 +74,21 @@ const getAnyPosts = async (req, res) => {
 const getPost = async (req, res) => {
     const {id} = req.params;
 
-    const post = await postModel.findOne({_id: id}, "-_id -__v -updatedAt").populate("user", "username -_id");
-    res.status(200).json(post);
+    Promise.all([
+        postModel.findOne({_id: id}, "-_imgURL._id -__v -updatedAt").populate("user", "username -_id"),
+        likeModel.count({post: id})
+    ]).then(([post, likesCount]) => {
+
+        const response = Object.assign({}, post._doc);
+        response.likes = {
+            count: likesCount
+        }
+        res.status(200).json(response);
+    }).catch((err) => {
+        res.status(500).json({
+            statusCode: 500
+        })
+    });
 };
 
 const getPosts = (req, res) => {
@@ -88,6 +102,7 @@ const updatePost = (req, res) => {
 const removePost = (req, res) => {
 
 };
+
 
 module.exports = {
     createPost,
