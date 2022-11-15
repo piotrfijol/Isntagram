@@ -4,6 +4,7 @@ import UserHeader from '../UserHeader';
 import PostCommentSection from '../PostCommentSection';
 import { FaHeart, FaCommentAlt } from 'react-icons/fa'
 import './Post.scss'
+import { LikeButton } from '../LikeButton';
 
 const defaultPost = {
     description: "",
@@ -18,7 +19,7 @@ export default function Post({ variant = "", post = defaultPost }) {
     <div className={"post " + (isPreview() ? "preview" : "")}>
         { !isPreview() ? <UserHeader className="post__header" user={post.user}/> : null }
         <div className="post__picture">
-            <img src={post.imgURL} />
+            <img src={post.imgURL[1280]} />
         </div>
 
         <div className="post__wrapper">
@@ -35,8 +36,8 @@ export default function Post({ variant = "", post = defaultPost }) {
                             collapsed={false} 
                         />
                         <div className="post__actions">
-                            <ActionButton icon={FaHeart} name="Like"/>
-                        <p className="post__likes">9,000 likes</p>
+                            <LikeButton postId={post._id}/>
+                            <p className="post__likes">{post.likes.count} likes</p>
                         </div>
 
                     </React.Fragment>
@@ -44,7 +45,7 @@ export default function Post({ variant = "", post = defaultPost }) {
                 : (
                     <React.Fragment>
                         <div className="post__actions">
-                            <ActionButton icon={FaHeart} name="Like"/>
+                            <LikeButton postId={post._id}/>
                             <ActionButton icon={FaCommentAlt} name="Comments" />
                         <p className="post__likes">9,000 likes</p>
                         </div>
