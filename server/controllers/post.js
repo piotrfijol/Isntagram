@@ -56,7 +56,7 @@ const createPost = async (req, res) => {
 };
 
 const getAnyPosts = async (req, res) => {
-    const posts = await postModel.find({}, "-imgURL._id").limit(10);
+    const posts = await postModel.find({}, "-imgURL._id").sort({createdAt: -1});
 
     if(!posts.length) {
         return res.status(404).json({
@@ -74,25 +74,45 @@ const getAnyPosts = async (req, res) => {
 const getPost = async (req, res) => {
     const {id} = req.params;
 
-    Promise.all([
-        postModel.findOne({_id: id}, "-_imgURL._id -__v -updatedAt").populate("user", "username -_id"),
-        likeModel.count({post: id})
-    ]).then(([post, likesCount]) => {
+    try {
+        const post = await postModel.findOne({_id: id}, "-_imgURL._id -__v -updatedAt").populate("user", "username -_id");
+        res.status(200).json(post);
 
-        const response = Object.assign({}, post._doc);
-        response.likes = {
-            count: likesCount
-        }
-        res.status(200).json(response);
-    }).catch((err) => {
+    } catch(err) {
         res.status(500).json({
             statusCode: 500
         })
-    });
+    }
 };
 
-const getPosts = (req, res) => {
+const getPosts = async (req, res) => {
 
+    const posts = await postModel.aggregate([
+        {
+            $lookup:
+                {
+                    from: "followings",
+                    localField: "user",
+                    foreignField: "to",
+                    as: "relationship"
+                }
+        },
+        { "$match": { "relationship.from": req.user._id } }
+    ]).sort({createdAt: -1}).limit(10);
+
+    const postsPopulated = await userModel.populate(posts, {path: "user", select: "username -_id"});
+
+    if(!posts.length) {
+        return res.status(404).json({
+            statusCode: 404,
+            message: "No posts available"
+        });
+    }
+
+    return res.status(200).json({
+        statusCode: 200,
+        posts: postsPopulated
+    });
 };
 
 const updatePost = (req, res) => {
