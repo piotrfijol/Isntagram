@@ -19,6 +19,10 @@ const postSchema = new Schema({
             required: true
         },
         tags: [String],
+        likesCount: {
+            type: Number,
+            default: 0
+        }
     },
     {timestamps: true}
 );

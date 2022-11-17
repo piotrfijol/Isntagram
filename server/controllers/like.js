@@ -1,11 +1,15 @@
 const likeModel = require("../models/like");
+const postModel = require("../models/post");
 
 const like = async (req, res) => {
     const {id: postId} = req.params;
 
-    let like = await likeModel.findOne({user: req.user._id, post: postId})
+    let [like, post] = await Promise.all([
+        likeModel.findOne({user: req.user._id, post: postId}),
+        postModel.updateOne({_id: postId}, {$inc: {likesCount: 1}})
+    ]);
+
     if(like) {
-        like.remove();
         return res.json({
             // post already liked
         }); 
@@ -26,7 +30,11 @@ const like = async (req, res) => {
 const unlike = async (req, res) => {
     const {id: postId} = req.params;
 
-    let like = await likeModel.findOne({user: req.user._id, post: postId})
+    let [like, post] = await Promise.all([
+        likeModel.findOne({user: req.user._id, post: postId}),
+        postModel.updateOne({_id: postId}, {$inc: {likesCount: -1}})
+    ]);
+
     if(like) {
         like.remove();
         return res.json({

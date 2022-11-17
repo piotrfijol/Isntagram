@@ -37,7 +37,7 @@ export default function Post({ variant = "", post = defaultPost }) {
                         />
                         <div className="post__actions">
                             <LikeButton postId={post._id}/>
-                            <p className="post__likes">{post.likes.count} likes</p>
+                            <p className="post__likes">{post.likesCount} likes</p>
                         </div>
 
                     </React.Fragment>
@@ -47,7 +47,7 @@ export default function Post({ variant = "", post = defaultPost }) {
                         <div className="post__actions">
                             <LikeButton postId={post._id}/>
                             <ActionButton icon={FaCommentAlt} name="Comments" />
-                        <p className="post__likes">9,000 likes</p>
+                        <p className="post__likes">{post.likesCount} likes</p>
                         </div>
                         <p className="post__description">
                             {post.description}
