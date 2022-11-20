@@ -4,10 +4,13 @@ import { FollowButton } from '../../components/FollowButton';
 import { PostThumbnail } from '../../components/PostThumbnail';
 import { useAuth } from '../../hooks/useAuth';
 import usePrivateAxios from '../../hooks/usePrivateAxios';
+import {useMediaQuery} from 'react-responsive';
 import './Profile.scss'
+
 
 export default function Profile() {
 
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
     const [userData, setUserData] = useState(null);
     const {name: username} = useParams();
     const axiosPrivate = usePrivateAxios();
@@ -33,20 +36,47 @@ export default function Profile() {
             </div>
             <div className="profile__info">
                 <p className="profile__info__username">{userData.username}</p>
-                <div className="profile__info__details">
+                { !isTabletOrMobile 
+                ? (<div className="profile__info__details">
                     <p>Posts {userData.posts.length}</p>
                     <p>Followers {userData.followers.count}</p>
                     <p>Following {userData.following.count}</p>
-                </div>
+                   </div>)
+                : (<Link to={`/settings`}>
+                    <button className="profile__btn profile__btn--block">Edit Profile</button>
+                   </Link>)
+                }
                 <p className="profile__info__bio">Follow me on other social media: Snapchat.. Tiktok.. Yt..</p>
             </div>
             <div>
-                {userData.username === auth.username 
-                ? null 
-                : <FollowButton username={username} /> 
+                {userData.username !== auth.username 
+                ? <FollowButton username={username} /> 
+                : (!isTabletOrMobile 
+                    ? (<Link to={`/settings`}>
+                        <button className="profile__btn">Edit profile</button>
+                       </Link>) 
+                    : null
+                  ) 
             }
             </div>
         </div>
+        {isTabletOrMobile 
+            ? <div className="profile-details">
+                <div className="profile-details__tile">
+                    <p className="profile-details__tile__label">Posts</p>
+                    <p className="profile-details__tile__data">{userData.posts.length}</p>
+                </div>
+                <div className="profile-details__tile">
+                    <p className="profile-details__tile__label">Followers</p>
+                    <p className="profile-details__tile__data">{userData.followers.count}</p>
+                </div>
+                <div className="profile-details__tile">
+                    <p className="profile-details__tile__label">Following</p>
+                    <p className="profile-details__tile__data">{userData.following.count}</p>
+                </div>
+            </div>
+            : null
+        }
         <div className="profile-gallery">
             {userData.posts.map((post) => {
                 return (
