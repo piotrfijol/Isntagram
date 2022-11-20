@@ -71,6 +71,9 @@ $post-padding: .5em;
 
     .post__comments {
         flex: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 380px;
     }
 
     .post__wrapper {

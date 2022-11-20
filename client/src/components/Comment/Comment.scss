@@ -1,5 +1,5 @@
 .comment {
-    margin-bottom: 1em;
+    margin-bottom: 1.4em;
     margin-left: .6em;
 
     &__author .header__avatar {
@@ -13,5 +13,7 @@
 
     &__content {
         margin: 0;
+        word-wrap: break-word;
+        font-size: .8rem;
     }
 }
