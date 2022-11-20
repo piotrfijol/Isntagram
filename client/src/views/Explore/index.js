@@ -29,7 +29,7 @@ export default function Explore() {
         {
             posts.map((post) => {
                 return (
-                    <Link to={`/p/${post._id}`} >
+                    <Link key={post._id} to={`/p/${post._id}`} >
                         <PostThumbnail post={post} className="posts-gallery__thumbnail"/>
                     </Link>
                 ) 
