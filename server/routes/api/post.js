@@ -3,6 +3,7 @@ const router = express.Router();
 const { verifyJWT } = require("../../middleware/verifyJWT");
 const postController = require("../../controllers/post");
 const likeController = require("../../controllers/like");
+const commentController = require("../../controllers/comment");
 const multer = require("multer");
 const upload = multer();
 
@@ -47,6 +48,14 @@ router.get("/post/:id/like",
 
 router.get("/post/:id/likes",
     likeController.getLikes
+);
+
+router.get("/post/:postId/comments",
+    commentController.getComments
+);
+
+router.post("/post/:postId/comment",
+    commentController.createComment
 );
 
 module.exports = router;
