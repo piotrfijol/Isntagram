@@ -1,0 +1,17 @@
+.settings-container {
+    max-width: 1024px;
+    margin: auto;
+    margin-top: 4rem; 
+    display: flex;
+
+    &__settings, &__tabs {
+        height: 100%;
+        padding: .5rem;
+        background-color: #FFF;
+    }
+
+    &__settings {
+        flex: 1;
+        margin-left: .2rem;
+    }
+}
