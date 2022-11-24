@@ -42,7 +42,7 @@ export default function Profile() {
                     <p>Followers {userData.followers.count}</p>
                     <p>Following {userData.following.count}</p>
                    </div>)
-                : (<Link to={`/settings`}>
+                : (<Link to={`/settings/edit`}>
                     <button className="profile__btn profile__btn--block">Edit Profile</button>
                    </Link>)
                 }
@@ -52,7 +52,7 @@ export default function Profile() {
                 {userData.username !== auth.username 
                 ? <FollowButton username={username} /> 
                 : (!isTabletOrMobile 
-                    ? (<Link to={`/settings`}>
+                    ? (<Link to={`/settings/edit`}>
                         <button className="profile__btn">Edit profile</button>
                        </Link>) 
                     : null

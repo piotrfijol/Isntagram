@@ -12,6 +12,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { useSetup } from './hooks/useSetup';
 import { SignOut } from './views/SignOut';
 import { CreatePost } from './views/CreatePost';
+import { Settings } from './components/Settings';
+import { EditProfile } from './views/EditProfile';
 
 function App() {
   useSetup();
@@ -30,6 +32,9 @@ function App() {
               <Route path="/p/new" element={<CreatePost />} />
               <Route path="/p/:postId" element={<PostPreview />} />
               <Route path="/logout" element={<SignOut />} />
+            </Route>
+            <Route element={<Settings />}>
+                <Route path="/settings/edit" element={<EditProfile />}/>
             </Route>
           </Routes>
         </div>
