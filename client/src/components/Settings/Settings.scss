@@ -5,7 +5,7 @@
     display: flex;
 
     &__settings, &__tabs {
-        height: 100%;
+        height: auto;
         padding: .5rem;
         background-color: #FFF;
     }
