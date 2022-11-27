@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import usePrivateAxios from '../../hooks/usePrivateAxios';
 import {useMediaQuery} from 'react-responsive';
 import './Profile.scss'
+import { Avatar } from '../../components/Avatar';
 
 
 export default function Profile() {
@@ -31,9 +32,7 @@ export default function Profile() {
     userData ?
     <div className="profile-container">
         <div className="profile">
-            <div className="profile__avatar">
-                <img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" alt="a profile picture"/>
-            </div>
+            <Avatar className="profile__avatar" user={userData}/>
             <div className="profile__info">
                 <p className="profile__info__username">{userData.username}</p>
                 { !isTabletOrMobile 
