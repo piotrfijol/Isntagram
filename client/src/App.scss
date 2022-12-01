@@ -25,6 +25,11 @@ body {
   margin: 0 !important;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
 .not-interactive::before {
   content: '';
   position: absolute;
@@ -33,4 +38,23 @@ body {
   left: 0;
   top: 0;
   display: block;
+}
+
+.btn {
+  padding: .5rem 1rem;
+  border-radius: 7px;
+  border: none;
+  background-color: rgb(36, 104, 238);
+  color: #FFF;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: rgb(61, 119, 236);
+}
+
+.text-error {
+  color: rgb(224, 45, 45) !important;
+  text-shadow: 0 0 1px rgb(224, 45, 45) ;
+  
 }
