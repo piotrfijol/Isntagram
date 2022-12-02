@@ -20,6 +20,12 @@ export const Avatar = ({user, className}) => {
   return (
     <div className={className}>
         <img 
+            style={
+                {
+                    width: "100%",
+                    height: "auto"
+                }
+            }
             src={avatar["256"]} 
             alt="a profile picture"/>
     </div>
