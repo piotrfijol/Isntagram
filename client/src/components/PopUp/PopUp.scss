@@ -12,9 +12,9 @@
     justify-content: center;
 
     &__box {
-        width: 300px;
+        min-width: 300px;
         background-color: #FEFEFE;
-        height: 150px;
+        min-height: 150px;
         position: absolute;
         z-index: 999999999;
         border-radius: 12px;
