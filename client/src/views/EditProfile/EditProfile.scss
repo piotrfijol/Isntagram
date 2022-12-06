@@ -1,0 +1,48 @@
+.settings-content {
+    &__avatar {
+
+    }
+
+    &__avatar__preview {
+        max-width: 70px;
+        overflow: hidden;
+        margin: .2rem;
+    }
+
+    &__avatar {
+        margin-bottom: 1.7rem;
+    }
+
+    &__avatar__preview img {
+        border-radius: 50%;
+    }
+
+    &__avatar__username {
+        font-weight: 500;
+        font-size: 1.2rem; 
+        margin: 0; 
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+textarea, input {
+    padding: .4rem;
+    border-radius: 3px;
+    border-color: #AAA;
+    margin-top: .5rem
+}
+
+form button[type="submit"].btn {
+    margin-left: auto;
+    display: block; 
+}
+
+.char-counter {
+    text-align: right;
+    margin: .5rem;
+    font-size: .9rem;
+    color: #555;
+}
