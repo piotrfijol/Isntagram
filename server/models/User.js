@@ -14,6 +14,17 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    profile: {
+        biography: {
+            type: String,
+            maxlength: 480,
+            default: ''
+        },
+        img: {
+            "128": String,
+            "256": String
+        }
+    },
     refreshToken: {
         type: String,
     }
