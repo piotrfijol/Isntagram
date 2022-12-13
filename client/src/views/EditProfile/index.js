@@ -7,9 +7,9 @@ import "./EditProfile.scss";
 
 export const EditProfile = () => {
   const fileRef = useRef(null);
-  const [bio, setBio] = useState("");
   const axiosPrivate = usePrivateAxios();
-  const {auth} = useAuth();
+  const {auth, setAuth} = useAuth();
+  const [bio, setBio] = useState(auth.profile.biography);
   const [isAvatarPopup, setIsAvatarPopup] = useState(false);
   const bioMaxLength = 350;
 
@@ -28,23 +28,52 @@ export const EditProfile = () => {
     setIsAvatarPopup(false);
   };
 
-  const handleSubmit = (ev) => {
+  const editProfileInformation = (ev) => {
     ev.preventDefault();
 
     let form = new FormData();
-    form.set("file", fileRef.current.files[0]);
     form.set("biography", bio);
 
-    axiosPrivate.post("/api/account/edit", {
+    axiosPrivate("/api/account/edit", {
+      method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json'
+      },
+      data: {
+        biography: bio
       }
     }).then((response) => {
       console.log("Successful response");
+      setAuth((prev) => {
+        let obj = {...prev}
+        obj.profile.biography = response.data.biography
+
+        return obj;
+      })
     }).catch((err) => {
       console.error("Something went wrong");
     });
   }
+
+  const setAvatar = (ev) => {
+    ev.preventDefault();
+
+    let form = new FormData();
+    form.set("file", fileRef.current.files[0]);
+
+    axiosPrivate.post("/api/account/avatar", form)
+      .then((response) => {
+        setAuth((prev) => {
+          let obj = {...prev}
+          obj.profile.img = response.data.img
+          
+          return obj;
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  };
 
   return (
     <div className="settings-content">
@@ -62,8 +91,8 @@ export const EditProfile = () => {
           </div>
         </div>
         <PopUp title="Add new avatar" isVisible={isAvatarPopup} onClose={handlePopupClose}>
-          <form>
-            <input type="file" />
+          <form onSubmit={setAvatar}>
+            <input type="file" ref={fileRef} />
             <button style={{
                 margin: "1rem"
               }}
@@ -75,13 +104,13 @@ export const EditProfile = () => {
           </form>
         </PopUp>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={editProfileInformation}>
         <div className="col">
-          <label for="biography">Biography</label>
+          <label htmlFor="biography">Biography</label>
           <textarea 
             value={bio} 
             onChange={handleChange} 
-            placeholder="Your hobbies, links to your other social media, etc."
+            placeholder="Your hobbies, links to your social media, etc."
             id="biography"
             >
             </textarea>
