@@ -34,7 +34,7 @@ const getComments = (req, res) => {
     const { postId } = req.params;
     
     commentModel.find({ post: postId }, "user post content")
-    .populate({path:"user", select:"username -_id"})
+    .populate({path:"user", select:"username profile -_id"})
         .then((comments) => {
             return res.status(200).json({
                 statusCode: 200,

@@ -21,6 +21,7 @@ const getUser = async (req, res) => {
     ]).then((dataArr) => {
         res.json({
             username: user.username,
+            profile: user.profile,
             posts: dataArr[0],
             following: {
                 count: dataArr[1]

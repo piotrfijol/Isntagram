@@ -55,7 +55,7 @@ const authenticateUser = (req, res) => {
                 process.env.REFRESH_TOKEN_SECRET,
                 { expiresIn: '1d'});
 
-                const { _id, username } = user;
+                const { _id, username, profile } = user;
 
                 user.refreshToken = refreshToken;
                 try {
@@ -69,6 +69,7 @@ const authenticateUser = (req, res) => {
                     _id,
                     username,
                     accessToken,
+                    profile
                 });
 
             } else {

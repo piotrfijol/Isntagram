@@ -38,11 +38,13 @@ const usePrivateAxios = () => {
                     if(newAccessToken) {
                         request.headers = {}
                         request.headers['Authorization'] = "Bearer " + newAccessToken;
+                        
                         setAuth(prev => {
                             return {
                                 ...prev,
                                 username: data.username,
-                                accessToken: newAccessToken
+                                accessToken: newAccessToken,
+                                profile: data.profile
                             }
                         })
 
