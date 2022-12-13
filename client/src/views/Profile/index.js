@@ -41,13 +41,15 @@ export default function Profile() {
                     <p>Followers {userData.followers.count}</p>
                     <p>Following {userData.following.count}</p>
                    </div>)
-                : (<Link to={`/settings/edit`}>
-                    <button className="profile__btn profile__btn--block">Edit Profile</button>
-                   </Link>)
+                :  userData.username === auth.username 
+                    ? (<Link to={`/settings/edit`}>
+                        <button className="profile__btn profile__btn--block">Edit Profile</button>
+                       </Link>)
+                    : null
                 }
-                <p className="profile__info__bio">Follow me on other social media: Snapchat.. Tiktok.. Yt..</p>
+                <p className="profile__info__bio">{userData.profile.biography}</p>
             </div>
-            <div>
+            <div style={{marginLeft: "50px"}}>
                 {userData.username !== auth.username 
                 ? <FollowButton username={username} /> 
                 : (!isTabletOrMobile 
