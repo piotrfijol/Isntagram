@@ -10,7 +10,7 @@ export const Avatar = ({user, className}) => {
     const [avatar, setAvatar] = useState(defaultAvatar);
 
     useEffect(() => {
-        if(user.profile?.img) {
+        if(user.profile?.img && Object.keys(user.profile.img).length !== 0) {
             setAvatar(user.profile.img);
         } else {
             setAvatar(defaultAvatar);
