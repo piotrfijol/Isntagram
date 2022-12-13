@@ -1,27 +1,8 @@
 const postModel = require("../models/post");
 const userModel = require("../models/user");
 const likeModel = require("../models/like");
-const storage = require("../utils/storage");
-const DataURIParser = require("datauri/parser");
-const path = require("path");
+const { uploadImage } = require("../utils/storage");
 
-const uploadImage = (file, width) => {
-
-    if(!Number.isInteger(width)) throw new TypeError("Width must be an integer number");
-
-    const fileParser = new DataURIParser();
-    const extName = path.extname(file.originalname).toString();
-    const fileContent = fileParser.format(extName, file.buffer);
-
-    return storage.uploader.upload(fileContent.content, {
-        transformation: [
-            {crop: "scale", width},
-            {crop: "fill", width, aspect_ratio: "4:3", gravity: "auto"}
-        ],
-        folder: `posts/${width}`
-    })
-
-};
 
 const createPost = async (req, res) => {
     const {description, tags} = req.body;
@@ -29,7 +10,7 @@ const createPost = async (req, res) => {
     let storageResponses;
 
     try {
-        let storageRequests = [uploadImage(req.file, 1280), uploadImage(req.file, 480)];
+        let storageRequests = [uploadImage(req.file, {width: 1280}), uploadImage(req.file, {width: 480})];
         storageResponses = await Promise.all(storageRequests);
 
     } catch(err) {
@@ -75,7 +56,7 @@ const getPost = async (req, res) => {
     const {id} = req.params;
 
     try {
-        const post = await postModel.findOne({_id: id}, "-_imgURL._id -__v -updatedAt").populate("user", "username -_id");
+        const post = await postModel.findOne({_id: id}, "-_imgURL._id -__v -updatedAt").populate("user", "username profile -_id");
         res.status(200).json(post);
 
     } catch(err) {
