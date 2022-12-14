@@ -7,6 +7,7 @@ import usePrivateAxios from '../../hooks/usePrivateAxios';
 import {useMediaQuery} from 'react-responsive';
 import './Profile.scss'
 import { Avatar } from '../../components/Avatar';
+import { LoadingDots } from '../../components/placeholders/LoadingDots'
 
 
 export default function Profile() {
@@ -16,7 +17,7 @@ export default function Profile() {
     const {name: username} = useParams();
     const axiosPrivate = usePrivateAxios();
     const {auth} = useAuth();
-
+ 
     useEffect(() => {
         
         axiosPrivate.get(`/api/user/${username}`)
@@ -88,6 +89,6 @@ export default function Profile() {
             })}
         </div>
     </div>
-    : null
+    : <LoadingDots />
   )
 }
