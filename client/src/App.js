@@ -14,6 +14,7 @@ import { SignOut } from './views/SignOut';
 import { CreatePost } from './views/CreatePost';
 import { Settings } from './components/Settings';
 import { EditProfile } from './views/EditProfile';
+import TagPosts from './views/TagPosts';
 
 function App() {
   useSetup();
@@ -26,6 +27,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />} />
+              <Route path="/tags/:tag" element={<TagPosts />} />
               <Route path="/profile/:name" element={<Profile />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/p/new" element={<CreatePost />} />
