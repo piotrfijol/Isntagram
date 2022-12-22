@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PostThumbnail } from '../../components/PostThumbnail';
 import { LoadingDots } from '../../components/placeholders/LoadingDots'
 import usePrivateAxios from '../../hooks/usePrivateAxios';
+import {SlMagnifier} from 'react-icons/sl';
 import './Explore.scss';
 
 export default function Explore() {
@@ -33,16 +34,22 @@ export default function Explore() {
   return (
     loading ? <LoadingDots />
     : (
-        <div className="posts-gallery">
-        {
-            posts.map((post) => {
-                return (
-                    <Link key={post._id} to={`/p/${post._id}`} >
-                        <PostThumbnail post={post} className="posts-gallery__thumbnail"/>
-                    </Link>
-                ) 
-            })
-        }
+        <div className='content'>
+            <div className="searchbar">
+                <SlMagnifier />
+                <input type="search" />
+            </div>
+            <div className="posts-gallery">
+            {
+                posts.map((post) => {
+                    return (
+                        <Link key={post._id} to={`/p/${post._id}`} >
+                            <PostThumbnail post={post} className="posts-gallery__thumbnail"/>
+                        </Link>
+                    ) 
+                })
+            }
+            </div>
         </div>
     )
   )
