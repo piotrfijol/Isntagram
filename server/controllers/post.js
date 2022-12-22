@@ -1,12 +1,11 @@
 const postModel = require("../models/post");
 const userModel = require("../models/user");
-const likeModel = require("../models/like");
 const { uploadImage } = require("../utils/storage");
 
 
 const createPost = async (req, res) => {
-    const {description, tags} = req.body;
-
+    const {description} = req.body;
+    let tags = req.body.tags.split("#");
     let storageResponses;
 
     try {
@@ -24,7 +23,7 @@ const createPost = async (req, res) => {
         "480": storageResponses[1].url
     },
     post.description = description;
-    post.tags = [tags];
+    post.tags = tags;
 
     post.save((err, results) => {
         if(err) throw new Error("Post didnt get saved. Try again");
@@ -68,6 +67,9 @@ const getPost = async (req, res) => {
 
 const getPosts = async (req, res) => {
 
+    const PAGE_SIZE = 3;
+    const page = req.query['p'];
+
     const posts = await postModel.aggregate([
         {
             $lookup:
@@ -79,16 +81,9 @@ const getPosts = async (req, res) => {
                 }
         },
         { "$match": { "relationship.from": req.user._id } }
-    ]).sort({createdAt: -1}).limit(10);
+    ]).sort({createdAt: -1}).skip(PAGE_SIZE * page).limit(PAGE_SIZE);
 
     const postsPopulated = await userModel.populate(posts, {path: "user", select: "username -_id"});
-
-    if(!posts.length) {
-        return res.status(404).json({
-            statusCode: 404,
-            message: "No posts available"
-        });
-    }
 
     return res.status(200).json({
         statusCode: 200,
