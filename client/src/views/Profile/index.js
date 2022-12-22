@@ -31,6 +31,8 @@ export default function Profile() {
 
   return (
     userData ?
+    
+    <div className='content'>
     <div className="profile-container">
         <div className="profile">
             <Avatar className="profile__avatar" user={userData}/>
@@ -88,6 +90,7 @@ export default function Profile() {
                 )
             })}
         </div>
+    </div>
     </div>
     : <LoadingDots />
   )

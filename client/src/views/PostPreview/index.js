@@ -35,10 +35,13 @@ export default function PostPreview() {
       isLoading ? 
         <LoadingDots />
       : (
-      <Post 
-        post={post}
-        variant="preview"
-      />
+        <div class='content'>
+          <Post 
+            post={post}
+            variant="preview"
+          />
+
+        </div>
     )
   )
 }

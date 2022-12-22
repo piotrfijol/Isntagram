@@ -2,6 +2,10 @@ body {
   background-color: #FAFAFA;
 }
 
+.content {
+  overflow-y: scroll;
+}
+
 .form-container {
   background-color: #f5f5f5;
   box-shadow: 0 0 3px 0 #DDD;
