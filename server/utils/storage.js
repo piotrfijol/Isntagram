@@ -10,13 +10,18 @@ cloudinary.config({
 });
 
 
-const defaultConfig = {
-    width: 0,
-    aspectRatio: "4:3",
-    folder: "posts"
-}
 
-const uploadImage = (file, config = defaultConfig) => {
+const uploadImage = (file, config = {}) => {
+
+    const defaultConfig = {
+        width: 0,
+        aspectRatio: "4:3",
+        folder: "posts"
+    }
+
+    const width = config.width ? config.width : defaultConfig.width,
+        aspectRatio = config.aspectRatio ? config.aspectRatio : defaultConfig.aspectRatio,
+        folder = config.folder ? config.folder : defaultConfig.folder;
 
     if(!Number.isInteger(config['width'])) throw new TypeError("Width must be an integer number");
 
@@ -26,10 +31,10 @@ const uploadImage = (file, config = defaultConfig) => {
 
     return cloudinary.uploader.upload(fileContent.content, {
         transformation: [
-            {crop: "scale", width: config['width']},
-            {crop: "fill", width: config['width'], aspect_ratio: config['aspectRatio'], gravity: "auto"}
+            {crop: "scale", width},
+            {crop: "fill", width, aspect_ratio: aspectRatio, gravity: "auto"}
         ],
-        folder: [config['folder'], config['width'].toString()].join('/')
+        folder: [folder, width.toString()].join('/')
     })
 
 };
