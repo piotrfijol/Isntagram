@@ -69,6 +69,9 @@ export default function Post({ variant = "", post = defaultPost }) {
                         <p className="post__description">
                             {post.description}
                         </p>
+                        <p className="post__tags">
+                            {post.tags.filter((tag) => tag).map((tag) => <Link to={`/tags/${tag}`}>{`#${tag}`}</Link>)}
+                        </p>
                         {comments && comments.length === 0 
                         ? <p className="neglible post__comments" style={{textAlign: 'center'}}>No comments were found</p>
                         : (
