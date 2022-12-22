@@ -1,0 +1,27 @@
+.tags-input {
+    background-color: #FFF;
+    overflow: hidden;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    max-width: 350px;
+    flex-wrap: wrap;
+    padding: 0 .3em;
+
+    input[type="text"] {
+        outline: none;
+        border: none;
+        min-width: 60%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+}
+
+.tags-input.error {
+    border: 1px solid rgb(157, 31, 31);
+    box-shadow: 0 0 3px 0 rgb(157, 31, 31);
+}
+
+.error-message {
+    color: rgb(157, 31, 31);
+}
