@@ -54,7 +54,7 @@
     position: absolute;
     left: 0;
     padding-left: 30px;
-    z-index: 100;
+    z-index: 1000;
 }
 .searchbar svg {
     z-index: 101;
@@ -68,3 +68,21 @@
     position: relative;
     margin-top: 20px;
 }
+
+.suggestions {
+
+    width: 100%;
+    min-height: 50px;
+    background-color: #FFF;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+    top: 70%;
+    padding-top: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    &__suggestion {
+        padding: 1rem;
+    }
+ }

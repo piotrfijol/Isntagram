@@ -11,6 +11,9 @@ export default function Explore() {
     const [posts, setPosts] = useState([]);
     const axiosPrivate = usePrivateAxios();
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [isSuggestionVisible, setIsSuggestionVisible] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -31,13 +34,52 @@ export default function Explore() {
         }
     }, [setPosts]);
 
+    const handleSearch = (ev) => {
+        setSearch(ev.target.value);
+        axiosPrivate.get('/api/search', {params: {'q': ev.target.value}})
+            .then((response) => {
+                const data = response.data[response.data.type]
+                setSuggestions(data)
+            }).catch((err) => {
+
+            });
+    };
+
+
+    const showSuggestions = (ev) => {
+        setIsSuggestionVisible(true);
+    };
+
+    const hideSuggestions = (ev) => {
+        setIsSuggestionVisible(false);
+    };
+
   return (
     loading ? <LoadingDots />
     : (
         <div className='content'>
             <div className="searchbar">
+                <div className="searchbox">
+                </div>
+                
                 <SlMagnifier />
-                <input type="search" />
+                    <input type="search" onChange={handleSearch} value={search} onFocus={showSuggestions} />
+                    {isSuggestionVisible 
+                        ? (<div className="suggestions"  onBlur={hideSuggestions} >
+                            {suggestions.map((suggestion) => {
+                                let isUser = true;
+                                let name = suggestion.username || suggestion.name;
+                                if(search.startsWith("#")) {
+                                    name = "#" + name;
+                                    isUser = false;
+                                }
+
+                                return (<div className="suggestions__suggestion">
+                                    <Link to={isUser ? `/profile/${name}` : `/tags/${name.slice(1)}`}>{name}</Link>
+                                </div>)
+                        })}
+                        </div>) 
+                        : null}
             </div>
             <div className="posts-gallery">
             {
