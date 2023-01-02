@@ -1,5 +1,6 @@
 const postModel = require("../models/post");
 const userModel = require("../models/user");
+const tagsModel = require("../models/tags");
 const { uploadImage } = require("../utils/storage");
 
 
@@ -24,6 +25,14 @@ const createPost = async (req, res) => {
     },
     post.description = description;
     post.tags = tags;
+
+    const tagsPromises = [];
+
+    tags.forEach((tag) => {
+       tagsPromises.push(tagsModel.updateOne({name: tag}, {name: tag}, {upsert: true}));
+    });
+
+    const result = await Promise.all(tagsPromises);
 
     post.save((err, results) => {
         if(err) throw new Error("Post didnt get saved. Try again");
