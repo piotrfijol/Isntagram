@@ -1,47 +1,42 @@
 const followerModel = require("../models/follower");
 const followingModel = require("../models/following");
 const userModel = require("../models/user");
+const createError = require("http-errors");
 
-const getFollowing = async (req, res) => {
+const getFollowing = async (req, res, next) => {
     
     const user = await userModel.findOne({username: req.params.username});
 
     followingModel.find({from: user._id})
         .then((data) => {
             res.status(200).json({
-                statusCode: 200,
+                status: 200,
                 following: data
             })
         })
         .catch((err) => {
-            res.status(500).json({
-                statusCode: 500,
-                message: "Couldn't get data about user's follows"
-            })
+            return next(createError(500, "Couldn't get data about user's follows"))
         });
 
 };
 
-const getFollowers = async (req, res) => {
+const getFollowers = async (req, res, next) => {
     const user = await userModel.findOne({username: req.params.username});
 
     followerModel.find({to: user._id})
         .then((data) => {
             res.status(200).json({
-                statusCode: 200,
+                status: 200,
                 followers: data
             })
         })
         .catch((err) => {
-            res.status(500).json({
-                statusCode: 500,
-                message: "Couldn't get data about user's followers"
-            })
+            return next(createError(500, "Couldn't get data about user's followers"))
         });
 
 };
 
-const getIsFollowing = async (req, res) => {
+const getIsFollowing = async (req, res, next) => {
     const {username: requestedUser} = req.params;
 
     if(req.user.username === requestedUser) {
@@ -60,19 +55,13 @@ const getIsFollowing = async (req, res) => {
         });
 
     } catch(err) {
-        return res.status(500).json({
-            statusCode: 500,
-            message: "Server internal error"
-        });
+        return next(createError(500));
     }
  };
 
-const setFollow = async (req, res) => {
+const setFollow = async (req, res, next) => {
     if(req.user.username === req.params.username) {
-        return res.status(400).json({
-            statusCode: 400,
-            message: "You can't follow your own profile"
-        })
+        return next(createError(400, "You can't follow your own profile"));
     }
 
     const user = await userModel.findOne({username: req.params.username});
@@ -84,32 +73,25 @@ const setFollow = async (req, res) => {
 
     const isAlreadyFollowed = await followerModel.findOne(followData);
     if(isAlreadyFollowed) {
-        return res.json({
-
-        });
+        return next(createError(500))
     }
 
     try {
         await followerModel.create(followData);
         await followingModel.create(followData);
     } catch(err) {
-        res.status(500).json({
-
-        })
+        return next(createError(500))
     }
 
     return res.status(201).json({
-        statusCode: 201,
+        status: 201,
         message: "User followed"
     });
 };
 
 const removeFollow = async (req, res) => {
     if(req.user.username === req.params.username) {
-        return res.status(400).json({
-            statusCode: 400,
-            message: "You can't follow your own profile"
-        })
+        return next(createError(400, "You can't unfollow your own profile"))
     }
 
     const user = await userModel.findOne({username: req.params.username});

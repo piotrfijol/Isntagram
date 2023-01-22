@@ -1,18 +1,18 @@
 const userModel = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const createError = require("http-errors");
+
 require("dotenv").config()
 
-const createAccount = (req, res) => {
+const createAccount = (req, res, next) => {
     const { username, password, email } = req.body;
     
     userModel.find({$or: [{username}, {email}]})
     .then(async (data) => {
         if(data.length) {
-            return res.status(409).json({
-                statusCode: 409,
-                message: "Username or email is already taken",
-            })
+            return next(createError(409, "Username or email is already taken"));
+
         } else {
 
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -26,18 +26,18 @@ const createAccount = (req, res) => {
             user.save()
             .then((data) => {
                 res.status(201).json({
-                    statusCode: 201,
+                    status: 201,
                     message: "Account was created successfully",
                 })
             })
             .catch((err) => {
-                throw new Error("Server internal error occurred while creating an account");
+                return next(500);
             });
         }
     });
 };
 
-const authenticateUser = (req, res) => {
+const authenticateUser = (req, res, next) => {
     const { username, password } = req.body;
 
     userModel.findOne({ username })
@@ -61,7 +61,7 @@ const authenticateUser = (req, res) => {
                 try {
                     await user.save();
                 } catch(err) {
-                    throw new Error("Authentication problem occured. Try again later");
+                    return next(createError(500, "Authentication problem occured. Try again later"));
                 }
 
                 res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
@@ -73,10 +73,7 @@ const authenticateUser = (req, res) => {
                 });
 
             } else {
-            return res.status(422).json({
-                message: "Invalid credentials",
-                statusCode: 422
-            })
+                return next(createError(422, "Invalid credentials"));
         }
     })
 };
@@ -92,7 +89,7 @@ const logOut = async (req, res, next) => {
         res.clearCookie("refreshToken");
         
         res.status(204).json({
-            statusCode: 204,
+            status: 204,
             message: "Succesfully logged out"
         });
     }

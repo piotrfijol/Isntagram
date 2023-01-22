@@ -1,6 +1,7 @@
 const commentModel = require("../models/comment");
+const createError = require("http-errors");
 
-const createComment = (req, res) => {
+const createComment = (req, res, next) => {
     const { postId } = req.params;
 
     const comment = new commentModel({
@@ -14,7 +15,7 @@ const createComment = (req, res) => {
             const {content, post, user} = await document.populate({path: "user", select: "username -_id"});
 
             res.status(201).json({
-                statusCode: 201,
+                status: 201,
                 comment: {
                     content,
                     user,
@@ -23,29 +24,23 @@ const createComment = (req, res) => {
             });
 
         }).catch((err) => {
-            return res.status(500).json({
-                statusCode: 500,
-                message: "Server internal error"
-            });
+            return next(createError(500));
         });
 };
 
-const getComments = (req, res) => {
+const getComments = (req, res, next) => {
     const { postId } = req.params;
     
     commentModel.find({ post: postId }, "user post content")
     .populate({path:"user", select:"username profile -_id"})
         .then((comments) => {
             return res.status(200).json({
-                statusCode: 200,
+                status: 200,
                 comments
             })
         }) 
         .catch((err) => {
-            res.status(500).json({
-                statusCode: 500,
-                message: "Server Internal error"
-            })
+            return next(createError(500))
         });
 };
 

@@ -1,5 +1,6 @@
 const userModel = require("../models/user");
 const { uploadImage } = require("../utils/storage");
+const createError = require("http-errors");
 
 const edit = async (req, res) => {
     
@@ -14,12 +15,12 @@ const edit = async (req, res) => {
     }
 
     res.status(201).json({
-        statusCode: 201,
+        status: 201,
         biography: req.body['biography']
     });
 };
 
-const setAvatar = async (req, res) => {
+const setAvatar = async (req, res, next) => {
 
     let storageResponses;
     const user = await userModel.findOne(req.user._id);
@@ -28,7 +29,7 @@ const setAvatar = async (req, res) => {
         const storageRequests = [uploadImage(req.file, {width: 128, aspectRatio: "1:1", folder: 'avatars'}), uploadImage(req.file, {width: 256, aspectRatio: "1:1", folder: 'avatars'})];
         storageResponses = await Promise.all(storageRequests);
     } catch(err) {
-        console.error(err);
+        return next(createError(500));;
     }
 
     if(user) {
@@ -42,11 +43,11 @@ const setAvatar = async (req, res) => {
     try {
         await user.save()
         return res.status(201).json({
-            statusCode: 201,
+            status: 201,
             img: user.profile.img
         });
     } catch(err) {
-        res.status(500).send("Server internal error, try again later");
+        return next(createError(500));
     }
 };
 

@@ -8,7 +8,7 @@ const getPostsByTag = async (req, res) => {
     const posts = await postModel.find({tags: tag}).populate("user", "-_id").sort({createdAt: -1}).skip(PAGE_SIZE * page).limit(PAGE_SIZE);
 
     return res.status(200).json({
-        statusCode: 200,
+        status: 200,
         posts
     });
 };

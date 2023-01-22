@@ -2,9 +2,10 @@ const postModel = require("../models/post");
 const userModel = require("../models/user");
 const tagsModel = require("../models/tags");
 const { uploadImage } = require("../utils/storage");
+const createError = require("http-errors");
 
 
-const createPost = async (req, res) => {
+const createPost = async (req, res, next) => {
     const {description} = req.body;
     let tags = req.body.tags.split("#");
     let storageResponses;
@@ -35,10 +36,11 @@ const createPost = async (req, res) => {
     const result = await Promise.all(tagsPromises);
 
     post.save((err, results) => {
-        if(err) throw new Error("Post didnt get saved. Try again");
+        if(err) return next(createError(500, "Post didnt get saved. Try again"));
     
-        res.json({
-            "message": "message"
+        res.status(201).json({
+            status: 201,
+            "message": "Post saved succesfully"
         });
     });
 
@@ -48,14 +50,11 @@ const getAnyPosts = async (req, res) => {
     const posts = await postModel.find({}, "-imgURL._id").sort({createdAt: -1});
 
     if(!posts.length) {
-        return res.status(404).json({
-            statusCode: 404,
-            message: "No posts available"
-        });
+        return next(createError(404, "No posts available"));
     }
 
     return res.status(200).json({
-        statusCode: 200,
+        status: 200,
         posts
     });
 };
@@ -68,9 +67,7 @@ const getPost = async (req, res) => {
         res.status(200).json(post);
 
     } catch(err) {
-        res.status(500).json({
-            statusCode: 500
-        })
+        return next(createError(500));
     }
 };
 
@@ -95,7 +92,7 @@ const getPosts = async (req, res) => {
     const postsPopulated = await userModel.populate(posts, {path: "user", select: "username -_id"});
 
     return res.status(200).json({
-        statusCode: 200,
+        status: 200,
         posts: postsPopulated
     });
 };

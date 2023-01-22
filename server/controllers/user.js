@@ -2,16 +2,14 @@ const userModel = require("../models/user");
 const postModel = require("../models/post");
 const followingModel = require("../models/following");
 const followerModel = require("../models/follower");
+const createError = require("http-errors");
 
 const getUser = async (req, res) => {
     const {username} = req.params;
 
     const user = await userModel.findOne({username});
     if(!user) {
-        return res.status(404).json({
-            statusCode: 404,
-            message: "User not found"
-        });
+        return next(createError(404, "User not found"));
     }
 
     Promise.all([
