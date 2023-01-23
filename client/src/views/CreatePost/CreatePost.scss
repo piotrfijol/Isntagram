@@ -1,0 +1,20 @@
+.create-post {
+    padding: 50px;
+    background-color: #FFF;
+    margin: 7rem auto;
+
+    &__btn {
+        display: block;
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .row {
+        margin-top: 2rem;
+    } 
+}

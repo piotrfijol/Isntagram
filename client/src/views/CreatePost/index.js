@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
-import TextInput from '../../components/TextInput'
 import "./CreatePost.scss";
 import usePrivateAxios from "../../hooks/usePrivateAxios";
 import { TagsInput } from '../../components/TagsInput';
+import { useErrors } from "../../hooks/useErrors";
+import { useNavigate } from 'react-router-dom';
 
 export const CreatePost = () => {
     
@@ -10,6 +11,8 @@ export const CreatePost = () => {
     const [tags, setTags] = useState([]);
     const fileInput = useRef(null);
     const axiosPrivate = usePrivateAxios();
+    const {setError} = useErrors();
+    const navigate = useNavigate();
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
@@ -24,7 +27,9 @@ export const CreatePost = () => {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
-            
+            navigate("/")
+        }).catch((err) => {
+            setError(err.response.data.message);
         });
     };
 
@@ -34,18 +39,28 @@ export const CreatePost = () => {
     };
 
   return (
-    <form onSubmit={handleSubmit}>
-        <TextInput 
-            label="Description" 
-            id="description"
-            value={description}
-            onChange={(e)=>setDescription(e.target.value)}
-        />
-        <label htmlFor="post-image" className="file-label">
-        </label>
-        <input ref={fileInput} type="file" id="post-image"/>
-        <TagsInput onCreate={handleNewTag}/>
-        <button type="submit">Create post</button>
-    </form>
+    <div className="create-post">
+        <form onSubmit={handleSubmit}>
+            <div className="row">
+                <label htmlFor='post-description'>Description</label>
+                <textarea 
+                    name="description" 
+                    id="post-description" 
+                    value={description}
+                    onChange={(ev) => setDescription(ev.target.value)}
+                >
+                </textarea>
+            </div>
+            <div className="row">
+                <label htmlFor='post-image'>Choose a picture: </label>
+                <input ref={fileInput} type="file" id="post-image"/>
+            </div>
+            <div className="row">
+                <label style={{marginBottom: ".5rem", display: "inline-block"}} htmlFor='post-tags'>Tags</label>
+                <TagsInput className="tags-container" id="post-tags" onCreate={handleNewTag}/>
+            </div>
+            <button type="submit" className="btn create-post__btn">Create post</button>
+        </form>
+    </div>
   )
 }
