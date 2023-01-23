@@ -35,9 +35,9 @@ function App() {
                 <Route path="/p/new" element={<CreatePost />} />
                 <Route path="/p/:postId" element={<PostPreview />} />
                 <Route path="/logout" element={<SignOut />} />
-              </Route>
-              <Route element={<Settings />}>
-                  <Route path="/settings/edit" element={<EditProfile />}/>
+                <Route element={<Settings />}>
+                    <Route path="/settings/edit" element={<EditProfile />}/>
+                </Route>
               </Route>
             </Routes>
     </React.Fragment>

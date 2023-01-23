@@ -18,6 +18,7 @@ export const useSetup = () => {
                     return {
                         ...prev,
                         username: data.username,
+                        profile: data.profile,
                         accessToken: data.accessToken
                     }
                 })
