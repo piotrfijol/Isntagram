@@ -16,9 +16,10 @@ body("password")
     let {errors} = validationResult(req);
 
     if(errors.length > 0) {
-      return res.json({
-        errors
-    });
+      return res.status(422).json({
+        status: 422, 
+        message: errors[0].msg
+      });
     } else {
       next();
     }
@@ -70,8 +71,9 @@ body("email")
     let {errors} = validationResult(req);
   
     if(errors.length > 0) {
-      return res.json({
-        errors
+      return res.status(422).json({
+        status: 422, 
+        message: errors[0].msg
       });
     }
 

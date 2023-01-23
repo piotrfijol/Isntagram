@@ -26,8 +26,8 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
 
   // render the error page
-  err.statusCode = err.status || 500;
-  res.status(err.statusCode);
+  err.status = err.status || 500;
+  res.status(err.status);
   res.json(err);
 
 });
