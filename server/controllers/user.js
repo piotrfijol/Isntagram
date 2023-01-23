@@ -13,7 +13,7 @@ const getUser = async (req, res) => {
     }
 
     Promise.all([
-        postModel.find({user: user._id}, "-__v -_user -_updatedAt -imgURL._id"),
+        postModel.find({user: user._id}, "-__v -_user -_updatedAt -imgURL._id").sort({createdAt: -1}),
         followingModel.count({ from: user._id}),
         followerModel.count({ to: user._id })
     ]).then((dataArr) => {
