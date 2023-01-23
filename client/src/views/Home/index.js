@@ -30,7 +30,7 @@ export default function Home() {
         setSeenAll(true);
       }
     }).catch((err) => {
-      setError(err.response.data.msg);
+      if(err.response) setError(err.response.data.msg);
     });
 
   };

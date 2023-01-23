@@ -29,7 +29,7 @@ export const CreatePost = () => {
         }).then((response) => {
             navigate("/")
         }).catch((err) => {
-            setError(err.response.data.message);
+            if(err.response) setError(err.response.data.msg);
         });
     };
 

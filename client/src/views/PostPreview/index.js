@@ -25,7 +25,7 @@ export default function PostPreview() {
         setPost(response.data);
         setIsLoading(false);
       }).catch((err) => {
-        setError(err.response.data.msg);
+        if(err.response) setError(err.response.data.msg);
       });
 
       return () => {

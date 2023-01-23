@@ -73,7 +73,7 @@ export const EditProfile = () => {
         })
       })
       .catch((err) => {
-        setError(err.response.data.msg);
+        if(err.response) setError(err.response.data.msg);
       })
   };
 

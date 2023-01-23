@@ -26,7 +26,8 @@ export default function Explore() {
         }).then((response) => {
             setPosts(response.data.posts);
         }).catch((err) => {
-            setError(err.response.data.msg);
+            if(err.response)
+                if(err.response) setError(err.response.data.msg);
         }).finally(() => {
             setLoading(false);
         });
@@ -43,16 +44,16 @@ export default function Explore() {
                 const data = response.data[response.data.type]
                 setSuggestions(data)
             }).catch((err) => {
-
+                if(err.response) setError(err.response.data.msg);
             });
     };
 
 
-    const showSuggestions = (ev) => {
+    const showSuggestions = () => {
         setIsSuggestionVisible(true);
     };
 
-    const hideSuggestions = (ev) => {
+    const hideSuggestions = () => {
         setIsSuggestionVisible(false);
     };
 
