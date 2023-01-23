@@ -8,6 +8,7 @@ import {useMediaQuery} from 'react-responsive';
 import './Profile.scss'
 import { Avatar } from '../../components/Avatar';
 import { LoadingDots } from '../../components/placeholders/LoadingDots'
+import { useErrors } from '../../hooks/useErrors';
 
 
 export default function Profile() {
@@ -17,6 +18,7 @@ export default function Profile() {
     const {name: username} = useParams();
     const axiosPrivate = usePrivateAxios();
     const {auth} = useAuth();
+    const {setError} = useErrors();
  
     useEffect(() => {
         
@@ -24,7 +26,7 @@ export default function Profile() {
             .then((response) => {
                 setUserData(response.data);
             }).catch((err) => {
-                console.error(err);
+                setError(err.response.data.msg);
             });
 
     }, [username]);

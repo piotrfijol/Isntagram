@@ -4,6 +4,7 @@ import usePrivateAxios from "../../hooks/usePrivateAxios";
 import { Avatar } from "../../components/Avatar";
 import { PopUp } from '../../components/PopUp';
 import "./EditProfile.scss";
+import {useErrors} from "../../hooks/useErrors";
 
 export const EditProfile = () => {
   const fileRef = useRef(null);
@@ -12,6 +13,7 @@ export const EditProfile = () => {
   const [bio, setBio] = useState(auth.profile.biography);
   const [isAvatarPopup, setIsAvatarPopup] = useState(false);
   const bioMaxLength = 350;
+  const {setError} = useErrors();
 
   const handleChange = (ev) => {
     if(ev.target.value < bioMaxLength)
@@ -51,7 +53,7 @@ export const EditProfile = () => {
         return obj;
       })
     }).catch((err) => {
-      console.error("Something went wrong");
+      setError(err.response.data.message);
     });
   }
 
@@ -71,7 +73,7 @@ export const EditProfile = () => {
         })
       })
       .catch((err) => {
-        console.error(err);
+        setError(err.response.data.msg);
       })
   };
 

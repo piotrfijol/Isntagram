@@ -5,6 +5,7 @@ import { LoadingDots } from '../../components/placeholders/LoadingDots'
 import usePrivateAxios from '../../hooks/usePrivateAxios';
 import {SlMagnifier} from 'react-icons/sl';
 import './Explore.scss';
+import { useErrors } from '../../hooks/useErrors';
 
 export default function Explore() {
 
@@ -14,6 +15,7 @@ export default function Explore() {
     const [search, setSearch] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isSuggestionVisible, setIsSuggestionVisible] = useState(false);
+    const {setError} = useErrors();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -24,7 +26,7 @@ export default function Explore() {
         }).then((response) => {
             setPosts(response.data.posts);
         }).catch((err) => {
-
+            setError(err.response.data.msg);
         }).finally(() => {
             setLoading(false);
         });

@@ -4,6 +4,7 @@ import TextInput from '../../components/TextInput'
 import './SignIn.scss';
 import axios from '../../api/axios';
 import { useAuth } from '../../hooks/useAuth';
+import { useErrors } from '../../hooks/useErrors';
 
 export default function SignIn() {
   
@@ -12,6 +13,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const {setError} = useErrors();
 
   const sendSignInForm = (ev) => {
     ev.preventDefault();
@@ -28,9 +30,10 @@ export default function SignIn() {
       }
     }).then(jsonData => {
       setAuth(jsonData.data);
-      console.log("Logged in");
       navigate("/");
-    })
+    }).catch((err) => {
+      setError(err.response.data.message)
+    });
   };
 
   return ( !auth

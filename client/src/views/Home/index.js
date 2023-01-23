@@ -3,6 +3,7 @@ import Post from '../../components/Post'
 import usePrivateAxios from '../../hooks/usePrivateAxios'
 import { InfiniteScroll } from '../../components/InfiniteScroll';
 import { LoadingDots } from '../../components/placeholders/LoadingDots'
+import { useErrors } from '../../hooks/useErrors';
 
 export default function Home() {
 
@@ -10,6 +11,7 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
   const [seenAll, setSeenAll] = useState(false);
+  const {setError} = useErrors();
 
   const fetchPosts = (page, signal) => {
 
@@ -28,7 +30,7 @@ export default function Home() {
         setSeenAll(true);
       }
     }).catch((err) => {
-      console.error(err);
+      setError(err.response.data.msg);
     });
 
   };

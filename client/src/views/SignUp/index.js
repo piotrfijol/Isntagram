@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation } from 'react-router-dom'
 import axios from '../../api/axios';
 import TextInput from '../../components/TextInput'
 import { useAuth } from '../../hooks/useAuth';
+import { useErrors } from '../../hooks/useErrors';
 import './SignUp.scss';
 
 export default function SignUp() {
@@ -13,6 +14,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const {auth} = useAuth();
   const location = useLocation();
+  const {setError} = useErrors();
 
   const sendSignupForm = (ev) => {
     ev.preventDefault();
@@ -32,7 +34,8 @@ export default function SignUp() {
       if(jsonData.statusCode === 201) {
         window.location.replace("/signin");
       }
-      alert(jsonData.message)
+    }).catch((err) => {
+      setError(err.response.data.message);
     })
   };
 

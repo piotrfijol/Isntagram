@@ -4,6 +4,7 @@ import usePrivateAxios from '../../hooks/usePrivateAxios'
 import { InfiniteScroll } from '../../components/InfiniteScroll';
 import { LoadingDots } from '../../components/placeholders/LoadingDots'
 import { useParams } from 'react-router-dom';
+import { useErrors } from '../../hooks/useErrors';
 
 export default function TagPosts() {
 
@@ -12,6 +13,7 @@ export default function TagPosts() {
   const [page, setPage] = useState(0);
   const [seenAll, setSeenAll] = useState(false);
   const params = useParams();
+  const {setError} = useErrors();
 
   const fetchPosts = (page, signal) => {
 
@@ -30,7 +32,7 @@ export default function TagPosts() {
         setSeenAll(true);
       }
     }).catch((err) => {
-      console.error(err);
+      setError(err.response.data.message);
     });
 
   };
