@@ -18,6 +18,19 @@ export default function Explore() {
     const {setError} = useErrors();
 
     useEffect(() => {
+        let handler = document.addEventListener('click', (ev) => {
+            let clickedElementClass = Array.from(ev.target.classList);
+            if(!clickedElementClass.includes("search-field") && !clickedElementClass.includes("suggestions")) {
+                hideSuggestions();
+            }
+        })
+
+        return (() => {
+            document.removeEventListener("click", handler);
+        });
+    }, [])
+
+    useEffect(() => {
         const controller = new AbortController();
         const {signal} = controller;
 
@@ -66,9 +79,9 @@ export default function Explore() {
                 </div>
                 
                 <SlMagnifier />
-                    <input type="search" onChange={handleSearch} value={search} onFocus={showSuggestions} />
+                    <input className="search-field" type="search" onChange={handleSearch} value={search} onFocus={showSuggestions} />
                     {isSuggestionVisible 
-                        ? (<div className="suggestions"  onBlur={hideSuggestions} >
+                        ? (<div className="suggestions"  onBlur={hideSuggestions}>
                             {suggestions.map((suggestion) => {
                                 let isUser = true;
                                 let name = suggestion.username || suggestion.name;
@@ -77,7 +90,7 @@ export default function Explore() {
                                     isUser = false;
                                 }
 
-                                return (<div className="suggestions__suggestion">
+                                return (<div className="suggestions__suggestion" key={name}>
                                     <Link to={isUser ? `/profile/${name}` : `/tags/${name.slice(1)}`}>{name}</Link>
                                 </div>)
                         })}
