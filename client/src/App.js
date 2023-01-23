@@ -15,29 +15,31 @@ import { CreatePost } from './views/CreatePost';
 import { Settings } from './components/Settings';
 import { EditProfile } from './views/EditProfile';
 import TagPosts from './views/TagPosts';
+import { ErrorHandler } from './components/ErrorHandler';
 
 function App() {
   useSetup();
   
   return (
     <React.Fragment>
+      <ErrorHandler />
         <Navbar />
-          <Routes>
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/tags/:tag" element={<TagPosts />} />
-              <Route path="/profile/:name" element={<Profile />} />
-              <Route path="/explore" element={<Explore />} />
-              <Route path="/p/new" element={<CreatePost />} />
-              <Route path="/p/:postId" element={<PostPreview />} />
-              <Route path="/logout" element={<SignOut />} />
-            </Route>
-            <Route element={<Settings />}>
-                <Route path="/settings/edit" element={<EditProfile />}/>
-            </Route>
-          </Routes>
+            <Routes>
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/tags/:tag" element={<TagPosts />} />
+                <Route path="/profile/:name" element={<Profile />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/p/new" element={<CreatePost />} />
+                <Route path="/p/:postId" element={<PostPreview />} />
+                <Route path="/logout" element={<SignOut />} />
+              </Route>
+              <Route element={<Settings />}>
+                  <Route path="/settings/edit" element={<EditProfile />}/>
+              </Route>
+            </Routes>
     </React.Fragment>
   );
 }

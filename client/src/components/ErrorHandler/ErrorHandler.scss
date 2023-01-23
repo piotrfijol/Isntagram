@@ -1,0 +1,16 @@
+.errors {
+    padding: 1em .5em;
+    background-color: rgb(190, 59, 59);
+    color: #FFF;
+    position: fixed;
+    top: 2rem;
+    right: 1rem;
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+.show {
+    transition-duration: .3s;
+    transform: translateY(0);
+    opacity: 1;
+}
