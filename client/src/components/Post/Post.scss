@@ -67,6 +67,7 @@ $post-padding: .5em;
 
     & .post__wrapper .post__header:nth-of-type(1) {
         display: flex;
+        padding-top: .5rem;
     }
 
     .post__comments {
@@ -78,6 +79,7 @@ $post-padding: .5em;
 
     .post__wrapper {
         min-width: 250px;
+        max-width: 350px;
         display: flex;
         flex-direction: column;
     }
@@ -85,6 +87,18 @@ $post-padding: .5em;
     .post__comment-form  {
         margin-top: auto;
         bottom: 0;
+    }
+
+    .post__tags, .post__description {
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
+
+    .post__tags {
+        width: 100%;
+        flex-wrap: wrap;
+        display: flex;
+        margin-bottom: 1rem;
     }
 
 }
