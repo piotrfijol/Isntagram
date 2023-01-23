@@ -53,7 +53,7 @@ export const EditProfile = () => {
         return obj;
       })
     }).catch((err) => {
-      setError(err.response.data.message);
+      if(err.response) setError(err.response.data.message);
     });
   }
 
@@ -73,7 +73,7 @@ export const EditProfile = () => {
         })
       })
       .catch((err) => {
-        if(err.response) setError(err.response.data.msg);
+        if(err.response) setError(err.response.data.message);
       })
   };
 

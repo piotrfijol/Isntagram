@@ -40,7 +40,7 @@ export default function Explore() {
             setPosts(response.data.posts);
         }).catch((err) => {
             if(err.response)
-                if(err.response) setError(err.response.data.msg);
+                if(err.response) setError(err.respone.data.message);
         }).finally(() => {
             setLoading(false);
         });
@@ -57,7 +57,7 @@ export default function Explore() {
                 const data = response.data[response.data.type]
                 setSuggestions(data)
             }).catch((err) => {
-                if(err.response) setError(err.response.data.msg);
+                if(err.response) setError(err.respone.data.message);
             });
     };
 

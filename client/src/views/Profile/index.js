@@ -26,7 +26,7 @@ export default function Profile() {
             .then((response) => {
                 setUserData(response.data);
             }).catch((err) => {
-                if(err.response) setError(err.response.data.msg);
+                if(err.response) setError(err.respone.data.message);
             });
 
     }, [username]);
