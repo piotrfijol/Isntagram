@@ -42,31 +42,33 @@ export default function Profile() {
         <div className="profile">
             <Avatar className="profile__avatar" user={userData}/>
             <div className="profile__info">
-                <p className="profile__info__username">{userData.username}</p>
+                <div style={{display: "flex", alignItems: "center"}}>
+                    <p className="profile__info__username">{userData.username}</p>
+                    <div style={{marginLeft: "50px"}}>
+                        {!isProfileOwner()
+                        ? <FollowButton username={username} /> 
+                        : (!isTabletOrMobile 
+                            ? (<Link to={`/settings/edit`}>
+                                <button className="profile__btn">Edit profile</button>
+                            </Link>) 
+                            : null
+                        ) 
+                        }
+                    </div>
+                </div>
                 { !isTabletOrMobile 
                 ? (<div className="profile__info__details">
                     <p>Posts {userData.posts.length}</p>
                     <p>Followers {userData.followers.count}</p>
                     <p>Following {userData.following.count}</p>
                    </div>)
-                :  userData.username === auth.username 
+                :  isProfileOwner()
                     ? (<Link to={`/settings/edit`}>
                         <button className="profile__btn profile__btn--block">Edit Profile</button>
                        </Link>)
                     : null
                 }
                 <p className="profile__info__bio">{userData.profile.biography}</p>
-            </div>
-            <div style={{marginLeft: "50px"}}>
-                {!isProfileOwner()
-                ? <FollowButton username={username} /> 
-                : (!isTabletOrMobile 
-                    ? (<Link to={`/settings/edit`}>
-                        <button className="profile__btn">Edit profile</button>
-                       </Link>) 
-                    : null
-                  ) 
-            }
             </div>
         </div>
         {isTabletOrMobile 
