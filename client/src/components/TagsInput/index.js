@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Badge } from './Badge'
+import { AiOutlineClose } from 'react-icons/ai';
 import './TagsInput.scss'
 
-export const TagsInput = ({ onCreate, id, className }) => {
+export const TagsInput = ({ onChange, id, className }) => {
     const [value, setValue] = useState('');
     const [tags, setTags] = useState([]);
     const [error, setError] = useState('');
@@ -10,8 +10,16 @@ export const TagsInput = ({ onCreate, id, className }) => {
     const MAX_TAG_LENGTH = 64;
     
     useEffect(() => {
-        onCreate(tags);
+        onChange(tags);
     }, [tags]);
+
+    
+    const handleClose = (ev) => {
+        ev.preventDefault();
+        
+        const removedTagContent = ev.currentTarget.parentNode.textContent;
+        setTags(tags.filter(tag => tag !== removedTagContent));
+    };
 
     const handleChange = (ev) => {
         setError("");
@@ -58,7 +66,15 @@ export const TagsInput = ({ onCreate, id, className }) => {
     return (
         <React.Fragment>
             <div className={className + " tags-input " + (error !== "" ? "error" : "")}  >
-                {tags.map((tag) => <Badge value={tag} key={tag}/>)}
+                {tags.map((tag) => (
+                    
+                    <div key={tag} className={"badge " + className}>
+                        {tag}
+                        <div className="badge__close" onClick={handleClose}>
+                            <AiOutlineClose />
+                        </div>
+                    </div>
+                ))}
                 <input type="text" id={id} value={value} onChange={handleChange}/>
             </div>
             <p className="error-message">{error}</p>

@@ -33,8 +33,7 @@ export const CreatePost = () => {
         });
     };
 
-
-    const handleNewTag = (tags) => {
+    const changeTags = (tags) => {
         setTags(tags);
     };
 
@@ -57,7 +56,7 @@ export const CreatePost = () => {
             </div>
             <div className="row">
                 <label style={{marginBottom: ".5rem", display: "inline-block"}} htmlFor='post-tags'>Tags</label>
-                <TagsInput className="tags-container" id="post-tags" onCreate={handleNewTag}/>
+                <TagsInput className="tags-container" id="post-tags" onChange={changeTags}/>
             </div>
             <button type="submit" className="btn create-post__btn">Create post</button>
         </form>
