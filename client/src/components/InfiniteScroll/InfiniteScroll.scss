@@ -1,0 +1,8 @@
+.lazyload__container {
+    flex: 1;
+    overflow-y: scroll;
+
+    &__end {
+        margin-top: 5rem;
+    }
+}

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import "./InfiniteScroll.scss";
 
 export const InfiniteScroll = ({ itemsLength, handler, finalMessage, seenAll, loader, children }) => {
   
@@ -30,11 +31,11 @@ export const InfiniteScroll = ({ itemsLength, handler, finalMessage, seenAll, lo
 
 
     return (  
-        <div className="lazyload__container" style={{width: '100%', overflow: 'scroll'}} onScrollCapture={handleScroll}>
+        <div className="lazyload__container" onScrollCapture={handleScroll}>
             {children}
             {
                 seenAll ? (
-                    finalMessage
+                    <p className="lazyload__container__end">{finalMessage}</p>
                 ) : null
             }
             {loading ? loader : null}
