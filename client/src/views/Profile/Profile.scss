@@ -100,6 +100,24 @@
     grid-template-columns: repeat(auto-fit, minmax(50px, 320px));
     gap: 1.4rem;
 
+
+    &__create-post {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            font-size: 126px;
+            fill: rgb(40, 114, 243)
+        }
+
+    }
+
+    &__create-post:hover svg {
+        opacity: .9;
+    }
+
     &__image {
         max-width: 320px;
         height: 320px;

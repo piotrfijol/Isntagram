@@ -9,6 +9,7 @@ import './Profile.scss'
 import { Avatar } from '../../components/Avatar';
 import { LoadingDots } from '../../components/placeholders/LoadingDots'
 import { useErrors } from '../../hooks/useErrors';
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 
 export default function Profile() {
@@ -20,6 +21,8 @@ export default function Profile() {
     const {auth} = useAuth();
     const {setError} = useErrors();
  
+    const isProfileOwner = () => userData.username === auth.username;
+
     useEffect(() => {
         
         axiosPrivate.get(`/api/user/${username}`)
@@ -55,7 +58,7 @@ export default function Profile() {
                 <p className="profile__info__bio">{userData.profile.biography}</p>
             </div>
             <div style={{marginLeft: "50px"}}>
-                {userData.username !== auth.username 
+                {!isProfileOwner()
                 ? <FollowButton username={username} /> 
                 : (!isTabletOrMobile 
                     ? (<Link to={`/settings/edit`}>
@@ -84,6 +87,15 @@ export default function Profile() {
             : null
         }
         <div className="profile-gallery">
+            {isProfileOwner()
+            ? (
+                <Link to={`/p/new`}>
+                    <div className="profile-gallery__create-post">
+                        <AiFillPlusCircle />
+                    </div>
+                </Link>
+            ) 
+            : null }
             {userData.posts.map((post) => {
                 return (
                     <Link to={`/p/${post._id}`} key={post._id}>
