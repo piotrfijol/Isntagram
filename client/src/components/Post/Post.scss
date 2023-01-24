@@ -70,16 +70,20 @@ $post-padding: .5em;
         padding-top: .5rem;
     }
 
+    .post__picture {
+        flex: 1;
+
+    }
+
     .post__comments {
         flex: 1;
         overflow-y: scroll;
         overflow-x: hidden;
-        max-height: 380px;
+        max-height: 320px;
     }
 
     .post__wrapper {
         min-width: 250px;
-        max-width: 350px;
         display: flex;
         flex-direction: column;
     }
@@ -101,6 +105,10 @@ $post-padding: .5em;
         margin-bottom: 1rem;
     }
 
+    .post__actions {
+        padding: .5em;
+    }
+
 }
 
 @media (min-width: 481px) {
@@ -117,11 +125,16 @@ $post-padding: .5em;
 
     .post.preview {
         flex-direction: row;
+        max-height: 506px;
         
         .post__actions {
             padding: .5em;
         }
         
+        & .post__wrapper {
+            width: 350px;
+        }
+
         & .post__wrapper .post__header:nth-of-type(1) {
             display: flex;
         }
