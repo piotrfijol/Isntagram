@@ -59,6 +59,10 @@ export default function Explore() {
             }).catch((err) => {
                 if(err.response) setError(err.respone.data.message);
             });
+
+        if(ev.target.value === "") {
+            setSuggestions([]);
+        }
     };
 
 
