@@ -11,7 +11,8 @@ body("username")
   .matches(/^[A-Za-z0-9\.]+$/)
   .isLength({max: 30}),
 body("password")
-  .isLength({min: 8}),
+  .isLength({min: 8})
+  .withMessage("Invalid credentials"),
   (req, res, next) => {
     let {errors} = validationResult(req);
 
