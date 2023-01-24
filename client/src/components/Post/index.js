@@ -14,13 +14,39 @@ const defaultPost = {
 }
 
 export default function Post({ variant = "", post = defaultPost }) {
-
+    
+    const axiosPrivate = usePrivateAxios();
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState(undefined);
-    const axiosPrivate = usePrivateAxios();
+    const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState(0);
 
     const handleChange = (ev) => {
         setComment(ev.target.value);
+    };
+    
+    useEffect(() => {
+        axiosPrivate.get(`/api/post/${post._id}/like`)
+            .then((response) => {
+                setIsLiked(response.data.isLiked);
+                setLikes(post.likesCount);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    const handleLike = (ev) => {
+        axiosPrivate(`/api/post/${post._id}/like`, {
+            method: isLiked ? 'delete' : 'put'
+        })
+        .then((response) => {
+            setLikes(isLiked ? likes - 1 : likes + 1);
+            setIsLiked(!isLiked);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
     };
 
     const sendComment = (ev) => {
@@ -81,8 +107,8 @@ export default function Post({ variant = "", post = defaultPost }) {
                             collapsed={false} 
                         />)}
                         <div className="post__actions">
-                            <LikeButton postId={post._id}/>
-                            <p className="post__likes">{post.likesCount} likes</p>
+                            <LikeButton isLiked={isLiked} onClick={handleLike}/>
+                            <p className="post__likes">{likes} likes</p>
                         </div>
 
                     </React.Fragment>
@@ -90,11 +116,11 @@ export default function Post({ variant = "", post = defaultPost }) {
                 : (
                     <React.Fragment>
                         <div className="post__actions">
-                            <LikeButton postId={post._id}/>
+                            <LikeButton isLiked={isLiked} onClick={handleLike}/>
                             <Link to={`/p/${post._id}`}>
                                 <ActionButton icon={FaCommentAlt} name="Comments" />
                             </Link>
-                        <p className="post__likes">{post.likesCount} likes</p>
+                        <p className="post__likes">{likes} likes</p>
                         </div>
                         <p className="post__description">
                             {post.description}
