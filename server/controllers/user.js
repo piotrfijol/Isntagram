@@ -4,7 +4,7 @@ const followingModel = require("../models/following");
 const followerModel = require("../models/follower");
 const createError = require("http-errors");
 
-const getUser = async (req, res) => {
+const getUser = async (req, res, next) => {
     const {username} = req.params;
 
     const user = await userModel.findOne({username});

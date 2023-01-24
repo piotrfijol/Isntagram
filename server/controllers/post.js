@@ -46,7 +46,7 @@ const createPost = async (req, res, next) => {
 
 };
 
-const getAnyPosts = async (req, res) => {
+const getAnyPosts = async (req, res, next) => {
     const posts = await postModel.find({}, "-imgURL._id").sort({createdAt: -1});
 
     if(!posts.length) {
