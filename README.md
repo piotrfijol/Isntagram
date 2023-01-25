@@ -1,6 +1,6 @@
 # Isntagram 
 
-ISNTagram is not a typo(well, it kind of is but an intentional one), it is **not the Instagram**. Obviously instagram played a big role here, this project is deeply inspired by that web app and could call itself an "Instagram clone". I'm not going to name it that way because it lacks *maaaany* features that Instagram has. Push notifications, chat, video support just to name a few. I might implement push notifications with websockets (socket.io library to be specific) at some point but first I have to focus on the client-side validation of some of the forms.
+ISNTagram is not a typo(well, it kind of is but an intentional one), it is **not the Instagram**. Obviously instagram played a big role here, this project is deeply inspired by that web app and could call itself an "Instagram clone". I'm not going to name it that way because it lacks *maaaany* features that Instagram has. Email verification with a token stored in DB, push notifications, chat, video support just to name a few. I might implement push notifications with websockets (socket.io library to be specific) at some point but first I have to focus on the client-side validation of some of the forms.
 
 Project has been built with the following web technologies:
 
