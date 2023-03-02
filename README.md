@@ -16,7 +16,7 @@ MaterialUI, bootstrap to build this web app way faster. I was considering Materi
 
 This is how my projects looks at the moment
 
-![Presentation of the results](https://github.com/piotrfijol/Isntagram/blob/main/readme-assets/showcase.gif)
+![Presentation of the results](https://github.com/piotrfijol/Isntagram/blob/main/readme-assets/showcase-1.gif)
 
 ## Installation
 
