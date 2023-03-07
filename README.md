@@ -1,6 +1,7 @@
 # Isntagram 
 
-Isntagram is not a misprint. It's my attempt of recreating Instagram in terms of graphical design. 
+Isntagram is not a misprint. 
+This repository is just my attempt of recreating Instagram in terms of graphical design (to certain degree).
 I might implement websocket-based push notifications (with help of socket.io library) at some point but first I have to focus on the client-side validation of some of the forms.
 
 Project has been built with the following web technologies:
