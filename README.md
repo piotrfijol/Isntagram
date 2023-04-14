@@ -1,8 +1,6 @@
 # Isntagram 
 
 Isntagram is not a misprint. 
-This repository is just my attempt of recreating Instagram in terms of graphical design (to certain degree).
-I might implement websocket-based push notifications (with help of socket.io library) at some point but first I have to focus on the client-side validation of some of the forms.
 
 Project has been built with the following web technologies:
 
@@ -11,8 +9,8 @@ Project has been built with the following web technologies:
 - **R**eact
 - **N**odeJS
 
-MERN stack for short. I chose this stack mainly because it is something I'm the most familiar with. Main focus here was to gain as much of general and practical knowledge as I possibly can. That is also a reason why I didn't choose to use f.e. PassportJS to handle authentication or
-MaterialUI, bootstrap to build this web app way faster. I was considering MaterialUI because of its Skeleton component(data placeholders) but I made my own custom CSS placeholder eventually. If it wasn't the need to practice things like component design I would definitely chose those battle-tested libraries and frameworks unless the website needs a "personal touch" to it.
+I chose this stack mainly because it is something I'm the most familiar with. Main focus here was to gain as much of general and practical knowledge as I possibly can. That is also a reason why I didn't choose to use f.e. PassportJS to handle authentication or
+MaterialUI, bootstrap to build this web app way faster. If it wasn't the need to practice things like component design I would definitely chose those battle-tested libraries and frameworks unless the website needs a "personal touch" to it.
 
 ## Results
 
