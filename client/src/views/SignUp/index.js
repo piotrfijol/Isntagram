@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Navigate, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import axios from '../../api/axios';
 import TextInput from '../../components/TextInput'
 import { useAuth } from '../../hooks/useAuth';
@@ -15,6 +15,7 @@ export default function SignUp() {
   const {auth} = useAuth();
   const location = useLocation();
   const {setError} = useErrors();
+  const navigate = useNavigate()
 
   const sendSignupForm = (ev) => {
     ev.preventDefault();
@@ -31,8 +32,8 @@ export default function SignUp() {
         email
       }
     }).then(jsonData => {
-      if(jsonData.statusCode === 201) {
-        window.location.replace("/signin");
+      if(jsonData.status === 201) {
+        navigate('/signin')
       }
     }).catch((err) => {
       setError(err.response.data.message);
@@ -40,7 +41,7 @@ export default function SignUp() {
   };
 
 
-  return ( !auth 
+  return ( auth === null 
     ? (
     <div className="content-wrapper">
       <div className="photo-wrapper">
