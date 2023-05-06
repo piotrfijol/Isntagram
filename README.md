@@ -40,8 +40,8 @@ In the 'server' subdirectory you'll have to create .env file with following envi
 - CLOUDINARY_NAME
 - CLOUDINARY_KEY
 - CLOUDINARY_SECRET 
-- ACCESS_SECRET_TOKEN   - secret key for acces token
-- REFRESH_SECRET_TOKEN  - secret key for refresh token
+- ACCESS_TOKEN_SECRET   - secret key for acces token
+- REFRESH_TOKEN_SECRET  - secret key for refresh token
 
 All the CLOUDINARY_* values you'll find on the top of the dashboard at cloudinary.com after signing in.
 
