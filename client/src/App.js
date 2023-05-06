@@ -1,6 +1,6 @@
 import './App.scss';
-import { Routes, Route } from 'react-router-dom'; 
-import React, { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom'; 
+import React from 'react';
 import Home from './views/Home';
 import Profile from './views/Profile';
 import SignIn from './views/SignIn';
@@ -39,6 +39,7 @@ function App() {
                     <Route path="/settings/edit" element={<EditProfile />}/>
                 </Route>
               </Route>
+              <Route path="*" element={<Navigate to={"/"}/>}/>
             </Routes>
     </React.Fragment>
   );
