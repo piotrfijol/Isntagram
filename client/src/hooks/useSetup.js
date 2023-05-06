@@ -22,8 +22,6 @@ export const useSetup = () => {
                         accessToken: data.accessToken
                     }
                 })
-            } else {
-                navigate("/signin")
             }
           })();
         }
